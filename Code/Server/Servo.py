@@ -31,7 +31,9 @@ class Servo:
 
 # Main program logic follows:
 if __name__ == '__main__':
-    print ('Program is starting ... ')
+    print("Now servos will rotate to certain angles.") 
+    print("Please keep the program running when installing the servos.")
+    print("After that, you can press ctrl-C to end the program.")
     S=Servo()
     while True:
         try:
