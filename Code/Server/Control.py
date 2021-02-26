@@ -357,9 +357,9 @@ class Control:
         x=self.restriction(int(data[2]),-35,35)
         y=self.restriction(int(data[3]),-35,35)
         if gait=="1" :
-            F=round(self.map(int(data[4]),2,10,126,45))
+            F=round(self.map(int(data[4]),2,10,126,22))
         else:
-            F=round(self.map(int(data[4]),2,10,171,90))
+            F=round(self.map(int(data[4]),2,10,171,45))
         angle=int(data[5])
         z=Z/F
         delay=0.01
