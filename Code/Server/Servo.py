@@ -36,17 +36,12 @@ if __name__ == '__main__':
     print("After that, you can press ctrl-C to end the program.")
     S=Servo()
     while True:
-        try:
+        try:        
             for i in range(32):
                 S.setServoAngle(i,90)
+            time.sleep(3)
         except KeyboardInterrupt:
             print ("\nEnd of program")
-        S.setServoAngle(13,0)
-        S.setServoAngle(10,0)
-        S.setServoAngle(31,0)
-        S.setServoAngle(18,180)
-        S.setServoAngle(21,180)
-        S.setServoAngle(27,180)
-        break
+            break
 
 
