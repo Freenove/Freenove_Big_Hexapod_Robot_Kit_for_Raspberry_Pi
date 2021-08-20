@@ -467,8 +467,8 @@ class MyWindow(QMainWindow,Ui_client):
         try:
             command = cmd.CMD_POWER + '\n'
             self.client.send_data(command)
-            self.progress_Power1.setFormat(self.power_value[0]+"V")
-            self.progress_Power2.setFormat(self.power_value[1] + "V")
+            self.progress_Power1.setFormat(str(self.power_value[0])+"V")
+            self.progress_Power2.setFormat(str(self.power_value[1]) + "V")
             self.progress_Power1.setValue(self.restriction(round((float(self.power_value[0]) - 5.00) / 3.40 * 100), 0, 100))
             self.progress_Power2.setValue(self.restriction(round((float(self.power_value[1]) - 7.00) / 1.40 * 100), 0, 100))
             #print (command)
