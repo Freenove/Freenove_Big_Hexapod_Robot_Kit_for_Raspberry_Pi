@@ -30,7 +30,7 @@ class ADC:
             
         battery1=round(val0/255*5*3,2)
         battery2=round(val1/255*5*3,2)
-        print(str(self.adc.address)+" "+str(val0)+" "+str(val1))
+        #print(str(self.adc.address)+" "+str(val0)+" "+str(val1))
         return battery1,battery2
 
 
