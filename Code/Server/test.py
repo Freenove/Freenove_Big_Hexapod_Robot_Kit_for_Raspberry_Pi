@@ -77,8 +77,8 @@ def test_Servo():
         print ("\nEnd of program")
         
         
-from ADS7830 import *
-adc=ADS7830()
+from ADC import *
+adc=ADC()
 def test_Adc():
     try:
         while True:

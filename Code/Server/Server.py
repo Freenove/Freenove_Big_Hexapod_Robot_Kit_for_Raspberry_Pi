@@ -11,7 +11,7 @@ from Servo import *
 from Thread import *
 from Buzzer import *
 from Control import *
-from ADS7830 import *
+from ADC import *
 from Ultrasonic import *
 from Command import COMMAND as cmd
 
@@ -19,7 +19,7 @@ class Server:
     def __init__(self):
         self.tcp_flag=False
         self.led=Led()
-        self.adc=ADS7830()
+        self.adc=ADC()
         self.servo=Servo()
         self.buzzer=Buzzer()
         self.control=Control()
@@ -135,17 +135,17 @@ class Server:
                     continue
                 elif cmd.CMD_BUZZER in data:
                     self.buzzer.run(data[1])
-                elif cmd.CMD_POWER in data:  
-                     batteryVoltage=self.adc.batteryPower()
-                     command=cmd.CMD_POWER+"#"+str(batteryVoltage[0])+"#"+str(batteryVoltage[1])+"\n"
-                     #print(command)
-                     self.send_data(self.connection1,command)
-                     if batteryVoltage[0] < 5.5 or batteryVoltage[1]<6:
-                         for i in range(3):
-                            self.buzzer.run("1")
-                            time.sleep(0.15)
-                            self.buzzer.run("0")
-                            time.sleep(0.1)
+                elif cmd.CMD_POWER in data:
+                    batteryVoltage=self.adc.batteryPower()
+                    command=cmd.CMD_POWER+"#"+str(batteryVoltage[0])+"#"+str(batteryVoltage[1])+"\n"
+                    #print(command)
+                    self.send_data(self.connection1,command)
+                    if batteryVoltage[0] < 5.5 or batteryVoltage[1]<6:
+                     for i in range(3):
+                        self.buzzer.run("1")
+                        time.sleep(0.15)
+                        self.buzzer.run("0")
+                        time.sleep(0.1)
                 elif cmd.CMD_LED in data:
                     try:
                         stop_thread(thread_led)
