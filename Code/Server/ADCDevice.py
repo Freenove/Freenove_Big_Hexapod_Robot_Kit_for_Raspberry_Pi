@@ -18,10 +18,10 @@ class ADCDevice(object):
     def detectI2C(self,addr):
         try:
             self.bus.write_byte(addr,0)
-            print("Found device in address 0x%x"%(addr))
+            #print("Found device in address 0x%x"%(addr))
             return True
         except:
-            print("Not found device in address 0x%x"%(addr))
+            #print("Not found device in address 0x%x"%(addr))
             return False
             
     def close(self):
