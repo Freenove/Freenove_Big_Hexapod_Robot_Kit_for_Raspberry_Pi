@@ -136,16 +136,19 @@ class Server:
                 elif cmd.CMD_BUZZER in data:
                     self.buzzer.run(data[1])
                 elif cmd.CMD_POWER in data:
-                    batteryVoltage=self.adc.batteryPower()
-                    command=cmd.CMD_POWER+"#"+str(batteryVoltage[0])+"#"+str(batteryVoltage[1])+"\n"
-                    #print(command)
-                    self.send_data(self.connection1,command)
-                    if batteryVoltage[0] < 5.5 or batteryVoltage[1]<6:
-                     for i in range(3):
-                        self.buzzer.run("1")
-                        time.sleep(0.15)
-                        self.buzzer.run("0")
-                        time.sleep(0.1)
+                    try:
+                        batteryVoltage=self.adc.batteryPower()
+                        command=cmd.CMD_POWER+"#"+str(batteryVoltage[0])+"#"+str(batteryVoltage[1])+"\n"
+                        #print(command)
+                        self.send_data(self.connection1,command)
+                        if batteryVoltage[0] < 5.5 or batteryVoltage[1]<6:
+                         for i in range(3):
+                            self.buzzer.run("1")
+                            time.sleep(0.15)
+                            self.buzzer.run("0")
+                            time.sleep(0.1)
+                    except:
+                        pass
                 elif cmd.CMD_LED in data:
                     try:
                         stop_thread(thread_led)
