@@ -8,18 +8,22 @@ for x in range(1,4):
         flag=flag | 0x01
         break
 for x in range(1,4):
-    if os.system("sudo pip3 install mpu6050-raspberrypi") == 0:
+    if os.system("sudo pip3 install rpi_ws281x") == 0:
         flag=flag | 0x02
         break
 for x in range(1,4):
-    if os.system("sudo apt-get install -y libqt5gui5 python3-dev python3-pyqt5 ") == 0:
+    if os.system("sudo pip3 install mpu6050-raspberrypi") == 0:
         flag=flag | 0x04
         break
 for x in range(1,4):
-    if os.system("sudo apt-get install -y libatlas-base-dev libjasper-dev") == 0:
+    if os.system("sudo apt-get install -y libqt5gui5 python3-dev python3-pyqt5 ") == 0:
         flag=flag | 0x08
         break
-if flag==0x0F:
+for x in range(1,4):
+    if os.system("sudo apt-get install -y libatlas-base-dev libjasper-dev") == 0:
+        flag=flag | 0x10
+        break
+if flag==0x1F:
         print("\nNow the installation is successful.")
         print("\nPlease restart raspberry pi")
 else:
