@@ -958,6 +958,14 @@ class calibrationWindow(QMainWindow,Ui_calibration):
         self.point[3][1] = self.four_y.text()
         self.point[3][2] = self.four_z.text()
 
+        self.point[4][0] = self.five_x.text()
+        self.point[4][1] = self.five_y.text()
+        self.point[4][2] = self.five_z.text()
+
+        self.point[5][0] = self.six_x.text()
+        self.point[5][1] = self.six_y.text()
+        self.point[5][2] = self.six_z.text()
+
         self.Save_to_txt(self.point,'point')
         reply = QMessageBox.information(self,                        
                                         "Message",  
