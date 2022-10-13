@@ -19,11 +19,7 @@ for x in range(1,4):
     if os.system("sudo apt-get install -y libqt5gui5 python3-dev python3-pyqt5 ") == 0:
         flag=flag | 0x08
         break
-for x in range(1,4):
-    if os.system("sudo apt-get install -y libatlas-base-dev libjasper-dev") == 0:
-        flag=flag | 0x10
-        break
-if flag==0x1F:
+if flag==0x0F:
         print("\nNow the installation is successful.")
         print("\nPlease restart raspberry pi")
 else:
