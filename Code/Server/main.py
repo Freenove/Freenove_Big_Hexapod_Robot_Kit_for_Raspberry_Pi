@@ -82,7 +82,7 @@ class MyWindow(QMainWindow,Ui_server):
         
 if __name__ == '__main__':
     try:
-        myshow=mywindow()
+        myshow=MyWindow()
         if myshow.user_ui==True:
             myshow.show();   
             sys.exit(myshow.app.exec_())
