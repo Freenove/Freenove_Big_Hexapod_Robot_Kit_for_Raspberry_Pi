@@ -10,30 +10,32 @@ class Ultrasonic:
         GPIO.setup(self.echo_pin,GPIO.IN)
     def send_trigger_pulse(self):
         GPIO.output(self.trigger_pin,True)
-        time.sleep(0.00015)
+        time.sleep(0.00001)
         GPIO.output(self.trigger_pin,False)
 
-    def wait_for_echo(self,value,timeout):
-        count = timeout
-        while GPIO.input(self.echo_pin) != value and count>0:
-            count = count-1
+    def pulseIn(self,pin,level,timeOut): # obtain pulse time of a pin under timeOut
+        t0 = time.time()
+        while(GPIO.input(pin) != level):
+            if((time.time() - t0) > timeOut*0.000001):
+                return 0;
+        t0 = time.time()
+        while(GPIO.input(pin) == level):
+            if((time.time() - t0) > timeOut*0.000001):
+                return 0;
+        pulseTime = (time.time() - t0)*1000000
+        return pulseTime
+        
     def getDistance(self):
-        distance_cm=[0,0,0,0,0]
+        distance_cm=[0,0,0]
         for i in range(3):
             self.send_trigger_pulse()
-            self.wait_for_echo(True,10000)
-            start = time.time()
-            self.wait_for_echo(False,10000)
-            finish = time.time()
-            pulse_len = finish-start
-            distance_cm[i] = pulse_len/0.000058
+            pingTime = self.pulseIn(self.echo_pin,GPIO.HIGH,300*60)
+            distance_cm[i] = pingTime * 340.0 / 2.0 /10000.0
         distance_cm=sorted(distance_cm)
-        return int(distance_cm[2])
+        return int(distance_cm[1])
         
-            
 # Main program logic follows:
 if __name__ == '__main__':
-    sonic=Ultrasonic()
-    while True:
-        print(sonic.getDistance())
+    pass
+        
 
