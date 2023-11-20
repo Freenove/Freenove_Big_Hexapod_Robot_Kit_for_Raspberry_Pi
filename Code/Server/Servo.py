@@ -35,9 +35,9 @@ def servo_installation_position():
     S=Servo()     
     for i in range(32):
         if (i == 10 or i == 13 or i == 31):
-            S.setServoAngle(i,0)
+            S.setServoAngle(i,10)
         elif (i == 18 or i == 21 or i == 27):
-            S.setServoAngle(i,180)
+            S.setServoAngle(i,170)
         else:
             S.setServoAngle(i,90)
     time.sleep(3)
