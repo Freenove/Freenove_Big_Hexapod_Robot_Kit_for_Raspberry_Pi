@@ -12,7 +12,7 @@ for x in range(1,4):
         flag=flag | 0x02
         break
 for x in range(1,4):
-    if os.system("sudo pip3 install mpu6050-raspberrypi") == 0:
+    if os.system("cd ./Libs/mpu6050 && sudo python3 setup.py install") == 0:
         flag=flag | 0x04
         break
 for x in range(1,4):
