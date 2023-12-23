@@ -51,7 +51,7 @@ class  Face:
         print("\n  {0} faces trained.".format(len(np.unique(labels))))
     def face_detect(self,img):
         try:
-            if sys.platform.startswith('win') or sys.platform.startswith('darwin'):
+            if sys.platform.startswith('win') or sys.platform.startswith('darwin') or sys.platform.startswith('linux'):
                 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
                 faces = self.detector.detectMultiScale(gray,1.2,5)
                 if len(faces)>0 :
