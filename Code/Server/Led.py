@@ -84,14 +84,6 @@ class Led:
             self.strip.show()
             time.sleep(wait_ms/1000.0)
 
-    def theaterChase(self,strip,data, wait_ms=50):
-        for q in range(3):
-            for i in range(0, self.strip.numPixels(), 3):
-                self.strip.setPixelColor(i+q,Color(data[0],data[1],data[2]))
-            self.strip.show()
-            time.sleep(wait_ms/1000.0)
-            for i in range(0, strip.numPixels(), 3):
-                strip.setPixelColor(i+q, 0)
     def ledIndex(self,index,R,G,B):
         color=self.LED_TYPR(self.ORDER,Color(R,G,B))
         for i in range(8):
