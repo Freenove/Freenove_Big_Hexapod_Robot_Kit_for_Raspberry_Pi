@@ -8,15 +8,13 @@ from PID import *
 import threading
 from Servo import*
 import numpy as np
-import RPi.GPIO as GPIO
+from gpiozero import OutputDevice
 from Command import COMMAND as cmd
+GPIO_4   = OutputDevice(4)     
+GPIO_4.off()
 class Control:
     def __init__(self):
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
-        self.GPIO_4 = 4
-        GPIO.setup(self.GPIO_4,GPIO.OUT)
-        GPIO.output(self.GPIO_4,False)
+
         self.imu=IMU()
         self.servo=Servo()
         self.move_flag=0x01

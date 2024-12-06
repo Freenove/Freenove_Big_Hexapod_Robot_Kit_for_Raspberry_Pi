@@ -1,51 +1,48 @@
 import time
 from Led import *
-led=Led()
 def test_Led():
+    led=Led()
     try:
         #Red wipe
         print ("\nRed wipe")
-        led.colorWipe(led.strip, Color(255, 0, 0)) 
+        led.colorWipe([255, 0, 0]) 
         time.sleep(1)
-        
-        
+
         #Green wipe
         print ("\nGreen wipe")
-        led.colorWipe(led.strip, Color(0, 255, 0)) 
+        led.colorWipe([0, 255, 0]) 
         time.sleep(1)
-        
-        
+    
         #Blue wipe
         print ("\nBlue wipe")
-        led.colorWipe(led.strip, Color(0, 0, 255)) 
+        led.colorWipe([0, 0, 255]) 
         time.sleep(1)
-        
-        
+
         #White wipe
         print ("\nWhite wipe")
-        led.colorWipe(led.strip, Color(255, 255, 255)) 
+        led.colorWipe([255, 255, 255]) 
         time.sleep(1)
-        
-        led.colorWipe(led.strip, Color(0, 0, 0))   #turn off the light
+    
+        led.colorWipe([0, 0, 0])   #turn off the light
         print ("\nEnd of program")
     except KeyboardInterrupt:
-        led.colorWipe(led.strip, Color(0, 0, 0))   #turn off the light
+        led.colorWipe([0, 0, 0])   #turn off the light
         print ("\nEnd of program")
 
 from Ultrasonic import *
-ultrasonic=Ultrasonic()                
 def test_Ultrasonic():
+    ultrasonic=Ultrasonic()
     try:
         while True:
-            data=ultrasonic.getDistance()   #Get the value
+            data=ultrasonic.get_distance()   #Get the value
             print ("Obstacle distance is "+str(data)+"CM")
             time.sleep(1)
     except KeyboardInterrupt:
         print ("\nEnd of program")
 
 from Servo import *
-servo=Servo()
 def test_Servo():
+    servo=Servo()
     try:
         
         for i in range(50):
@@ -78,8 +75,8 @@ def test_Servo():
         
         
 from ADC import *
-adc=ADC()
 def test_Adc():
+    adc=ADC()
     try:
         while True:
             Power=adc.batteryPower()
@@ -89,8 +86,8 @@ def test_Adc():
         print ("\nEnd of program")
 
 from Buzzer import *
-buzzer=Buzzer()
 def test_Buzzer():
+    buzzer=Buzzer()
     try:
         buzzer.run('1')
         time.sleep(1)

@@ -162,6 +162,7 @@ class Server:
                         pass
                     thread_led=threading.Thread(target=self.led.light,args=(data,))
                     thread_led.start()   
+
                 elif cmd.CMD_LED_MOD in data:
                     try:
                         stop_thread(thread_led)
@@ -172,7 +173,7 @@ class Server:
                     thread_led=threading.Thread(target=self.led.light,args=(data,))
                     thread_led.start()
                 elif cmd.CMD_SONIC in data:
-                    command=cmd.CMD_SONIC+"#"+str(self.sonic.getDistance())+"\n"
+                    command=cmd.CMD_SONIC+"#"+str(self.sonic.get_distance())+"\n"
                     self.send_data(self.connection1,command)
                 elif cmd.CMD_HEAD in data:
                     if len(data)==3:
@@ -193,9 +194,9 @@ class Server:
                         self.control.relax_flag=False
                 elif cmd.CMD_SERVOPOWER in data:
                     if data[1]=="0":
-                        GPIO.output(self.control.GPIO_4,True)
+                        GPIO_4.on()
                     else:
-                        GPIO.output(self.control.GPIO_4,False)
+                        GPIO_4.off()
                     
                 else:
                     self.control.order=data
