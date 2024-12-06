@@ -2,7 +2,30 @@
 
 > A Hexapod Robot Kit for Raspberry Pi.
 
-<img src='Picture/icon.png' width='30%'/>
+<img src='Picture/icon.png' width='50%'/>
+
+### Connection Board Version
+
+<table>
+  <tr>
+    <th>PCB Version</th>
+    <th>PCB Picture</th>
+  </tr>
+  <tr>
+    <td>V1.0</td>
+    <td align="center">
+      <img src='Picture/PCB_V1.0.png' width='30%' alt='V1.0'/>
+    </td>
+  </tr>
+  <tr>
+    <td>V2.0</td>
+    <td align="center">
+      <img src='Picture/PCB_V2.0.png' width='30%' alt='V2.0'/>
+    </td>
+  </tr>
+</table>
+
+### Download
 
 ### Download
 
