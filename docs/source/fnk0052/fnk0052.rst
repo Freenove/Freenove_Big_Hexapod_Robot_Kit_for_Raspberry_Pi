@@ -1,0 +1,44 @@
+##############################################################################
+Freenove Big Hexapod Robot Kit for Raspberry Pi
+##############################################################################
+
+.. toctree::
+   :titlesonly:
+   :caption: Welcome
+
+   codes/tutorial/Welcome.rst
+
+.. toctree::
+   :titlesonly: 
+   :caption: List
+
+   codes/tutorial/List.rst
+
+.. toctree::
+   :titlesonly: 
+   :caption: Preface
+
+   codes/tutorial/Preface.rst
+
+.. toctree::
+   :titlesonly: 
+   :caption: Preparation
+
+   codes/tutorial/Preparation.rst
+
+.. toctree::
+   :numbered:
+   :titlesonly:
+   :caption: Projects
+   
+
+   codes/tutorial/1_Installation.rst
+   codes/tutorial/2_Assembly.rst
+   codes/tutorial/3_Module_Test.rst
+   codes/tutorial/4_Hexapod_Robot.rst
+
+.. toctree::
+   :titlesonly:
+   :caption: What's Next?
+
+   codes/tutorial/WhatsNext.rst
