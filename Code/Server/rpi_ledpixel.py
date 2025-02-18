@@ -2,7 +2,7 @@ import time
 from rpi_ws281x import Adafruit_NeoPixel, Color
 
 class Freenove_RPI_WS281X:
-    def __init__(self, led_count=4, bright=255, sequence="RGB"):
+    def __init__(self, led_count=8, bright=255, sequence="RGB"):
         # Initialize the LED strip with default parameters
         self.set_led_type(sequence)
         self.set_led_count(led_count)

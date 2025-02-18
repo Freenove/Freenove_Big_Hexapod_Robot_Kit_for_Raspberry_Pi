@@ -1,131 +1,109 @@
 import time
-from Led import *
+
 def test_Led():
-    led=Led()
+    from led import Led
+    led = Led()
     try:
         #Red wipe
         print ("\nRed wipe")
-        led.colorWipe([255, 0, 0]) 
+        led.color_wipe([255, 0, 0]) 
         time.sleep(1)
 
         #Green wipe
         print ("\nGreen wipe")
-        led.colorWipe([0, 255, 0]) 
+        led.color_wipe([0, 255, 0]) 
         time.sleep(1)
     
         #Blue wipe
         print ("\nBlue wipe")
-        led.colorWipe([0, 0, 255]) 
+        led.color_wipe([0, 0, 255]) 
         time.sleep(1)
 
         #White wipe
         print ("\nWhite wipe")
-        led.colorWipe([255, 255, 255]) 
+        led.color_wipe([255, 255, 255]) 
         time.sleep(1)
     
-        led.colorWipe([0, 0, 0])   #turn off the light
+        led.color_wipe([0, 0, 0])   #turn off the light
         print ("\nEnd of program")
     except KeyboardInterrupt:
-        led.colorWipe([0, 0, 0])   #turn off the light
+        led.color_wipe([0, 0, 0])   #turn off the light
         print ("\nEnd of program")
 
-from Ultrasonic import *
 def test_Ultrasonic():
+    from ultrasonic import Ultrasonic
     ultrasonic=Ultrasonic()
     try:
         while True:
             data=ultrasonic.get_distance()   #Get the value
             print ("Obstacle distance is "+str(data)+"CM")
-            time.sleep(1)
+            time.sleep(0.01)
     except KeyboardInterrupt:
         print ("\nEnd of program")
 
-from Servo import *
 def test_Servo():
-    servo=Servo()
+    from servo import Servo
+    servo = Servo()
     try:
-        
         for i in range(50):
-            servo.setServoAngle(15,90+i)
-            servo.setServoAngle(12,90+i)
-            servo.setServoAngle(9,90+i)
-            servo.setServoAngle(16,90+i)
-            servo.setServoAngle(19,90+i)
-            servo.setServoAngle(22,90+i)
+            servo.set_servo_angle(15,90+i)
+            servo.set_servo_angle(12,90+i)
+            servo.set_servo_angle(9,90+i)
+            servo.set_servo_angle(16,90+i)
+            servo.set_servo_angle(19,90+i)
+            servo.set_servo_angle(22,90+i)
             time.sleep(0.005)
         for i in range(60):
-            servo.setServoAngle(14,90+i)
-            servo.setServoAngle(11,90+i)
-            servo.setServoAngle(8,90+i)
-            servo.setServoAngle(17,90-i)
-            servo.setServoAngle(20,90-i)
-            servo.setServoAngle(23,90-i)
+            servo.set_servo_angle(14,90+i)
+            servo.set_servo_angle(11,90+i)
+            servo.set_servo_angle(8,90+i)
+            servo.set_servo_angle(17,90-i)
+            servo.set_servo_angle(20,90-i)
+            servo.set_servo_angle(23,90-i)
             time.sleep(0.005)
         for i in range(120):
-            servo.setServoAngle(13,i)
-            servo.setServoAngle(10,i)
-            servo.setServoAngle(31,i)
-            servo.setServoAngle(18,180-i)
-            servo.setServoAngle(21,180-i)
-            servo.setServoAngle(27,180-i)
+            servo.set_servo_angle(13,i)
+            servo.set_servo_angle(10,i)
+            servo.set_servo_angle(31,i)
+            servo.set_servo_angle(18,180-i)
+            servo.set_servo_angle(21,180-i)
+            servo.set_servo_angle(27,180-i)
             time.sleep(0.005)
         print ("\nEnd of program")      
+        servo.relax()
     except KeyboardInterrupt:
+        servo.relax()
         print ("\nEnd of program")
-        
-        
-from ADC import *
+
 def test_Adc():
-    adc=ADC()
+    from adc import ADC
+    adc = ADC()
     try:
         while True:
-            Power=adc.batteryPower()
+            Power=adc.read_battery_voltage()
             print ("The battery voltage is "+str(Power)+'\n')
             time.sleep(1)
     except KeyboardInterrupt:
         print ("\nEnd of program")
 
-from Buzzer import *
 def test_Buzzer():
-    buzzer=Buzzer()
+    from buzzer import Buzzer
+    buzzer = Buzzer()
     try:
-        buzzer.run('1')
+        buzzer.set_state(True)
         time.sleep(1)
         print ("1S")
         time.sleep(1)
         print ("2S")
         time.sleep(1)
         print ("3S")
-        buzzer.run('0')
-        print ("\nEnd of program")
+        buzzer.set_state(False)
+        print ("End of program")
     except KeyboardInterrupt:
-        buzzer.run('0')
-        print ("\nEnd of program")
+        buzzer.set_state(False)
+        print ("End of program")
         
-import threading        
-from Control import *
-# Main program logic follows:
-def aa():
-    while True:
-        test_Led()
-        #Power=adc.batteryPower()
-        #print ("The battery voltage is "+str(Power)+'\n')
-        data=ultrasonic.getDistance()   #Get the value
-        print ("Obstacle distance is "+str(data)+"CM")
-def bb():
-    while True:
-        for i in range(30,150,1):
-            servo.setServoAngle(1,i)
-            time.sleep(0.05)
-        for i in range(150,30,-1):
-            servo.setServoAngle(1,i)
-            time.sleep(0.05)
-        for i in range(90,150,1):
-            servo.setServoAngle(0,i)
-            time.sleep(0.05)
-        for i in range(150,90,-1):
-            servo.setServoAngle(0,i)
-            time.sleep(0.05)
+
 if __name__ == '__main__':
     print ('Program is starting ... ')
     import sys
