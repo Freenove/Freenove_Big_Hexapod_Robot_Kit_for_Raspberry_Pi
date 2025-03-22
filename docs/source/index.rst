@@ -31,7 +31,7 @@ This product provides the following online documents.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Welcome
+   :caption: FNK0052
 
    fnk0052/codes/tutorial/Welcome.rst
 
