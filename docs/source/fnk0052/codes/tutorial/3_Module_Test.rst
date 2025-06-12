@@ -12,7 +12,7 @@ You can watch this video while reading this chapter: https://youtu.be/D00LdVqXC5
 
 .. raw:: html
 
-   <iframe height="500" width="690" src="https://www.youtube.com/embed/D00LdVqXC5E" frameborder="0" allowfullscreen></iframe>
+   <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/D00LdVqXC5E" frameborder="0" allowfullscreen></iframe>
 
 We will help you with any concerns via support@freenove.com
 

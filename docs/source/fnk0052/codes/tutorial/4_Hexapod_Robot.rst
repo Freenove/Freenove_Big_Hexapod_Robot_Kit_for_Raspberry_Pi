@@ -8,13 +8,13 @@ Client control: https://youtu.be/KlxxgnW6uyo
 
 .. raw:: html
 
-   <iframe height="500" width="690" src="https://www.youtube.com/embed/KlxxgnW6uyo" frameborder="0" allowfullscreen></iframe>
+   <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/KlxxgnW6uyo" frameborder="0" allowfullscreen></iframe>
 
 Calibration: https://youtu.be/NdXG3wmdufI
 
 .. raw:: html
 
-   <iframe height="500" width="690" src="https://www.youtube.com/embed/NdXG3wmdufI" frameborder="0" allowfullscreen></iframe>
+   <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/NdXG3wmdufI" frameborder="0" allowfullscreen></iframe>
 
 The robot features with live video, ultrasonic ranging and other functions. Based on Python3 and PyQt5, it has also been built with server and client, which communicate with each other through TCP/IP protocol and can be controlled remotely with the same LAN.  
 

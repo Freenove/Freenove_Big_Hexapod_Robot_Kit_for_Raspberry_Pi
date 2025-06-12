@@ -102,19 +102,26 @@ Optional Components
 Under normal circumstances, there are two ways to login to Raspberry Pi: 
 
 1) Using a stand-alone monitor. 
+
 2) Using a remote desktop or laptop computer monitor “sharing” the PC monitor with your RPi.
 
 Required Accessories for Monitor
 ----------------------------------------------------------------
 
 If you choose to use an independent monitor, mouse and keyboard, you also need the following accessories:
+
 1. A display with a HDMI interface
+
 2. A Mouse and a Keyboard with an USB interface
 
 As to Pi Zero and Pi Zero W, you also need the following accessories:
+
 1.	A Mini-HDMI to HDMI Adapter and Cable.
+
 2.	A Micro-USB to USB-A Adapter and Cable (Micro USB OTG Cable). 
+
 3.	A USB HUB.
+
 4.	USB to Ethernet Interface or USB Wi-Fi receiver. 
 
 For different Raspberry Pi Modules, the optional items may vary slightly but they all aim to convert the interfaces to Raspberry Pi standards.
@@ -155,9 +162,18 @@ Required Accessories for Remote Desktop
 Raspberry Pi OS
 ================================================================
 
-.. note:: 
-    | **Without Screen - Use Raspberry Pi - under Windows PC:** https://youtu.be/YND0RUuP-to
-    | **With Screen - Use Raspberry Pi - under Windows PC:** https://youtu.be/HEywFsFrj3I
+
+**Without Screen - Use Raspberry Pi - under Windows PC:** https://youtu.be/7vA5utwzY0E
+
+.. raw:: html
+
+   <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/7vA5utwzY0E" frameborder="0" allowfullscreen></iframe>
+
+**With Screen - Use Raspberry Pi - under Windows PC:** https://youtu.be/HEywFsFrj3I
+
+.. raw:: html
+
+   <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/HEywFsFrj3I" frameborder="0" allowfullscreen></iframe>
 
 Automatically Method
 ----------------------------------------------------------------
@@ -404,14 +420,24 @@ The control board is mainly connected the Raspberry Pi through the “PI-GPIO”
     :align: center
 
 - Spider Shield board: powered by two sets of batteries without protection plates, with each set containing two 18650 batteries and voltage ranging from 7V-8.4V.
+
 - DC socket: Two DC sockets available, each connecting to one set of batteries, each containing two 18650 batteries. 
+
 - S1(CTRL) Switch: It mainly controls chips like PCA9685 and ADS7830 and the power supply of the Raspberry Pi. When it is pressed, D1 indicator will turn ON.
+
 - S2(LOAD) Switch: It mainly controls the power supply of servos. When it is pressed, D2 indicator will turn ON.
+
 - LED port: Used to connect the LED Module, controlled directly by RPi.
+
 - MPU6050 Module port: Used to connect MPU6050, controlled directly by RPi. 
+
 - PI-GPIO port: Used to connect control board with RPi, facilitating RPi to control the robot 
+
 - I2CExtension Board: Used for the extension of other I2C devices.
+
 - Servo port: 32 servo ports available.
+
 - Sonic module port: The interface of HC-SR04 Ultrasonic Module is provided.
+
 - Buzzer: Turning ON when it is at high level and OFF at low level, directly controlled by RPi
 
