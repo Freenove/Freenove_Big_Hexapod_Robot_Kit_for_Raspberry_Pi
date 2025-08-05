@@ -10,10 +10,11 @@ Spider Shield for Raspberry Pi
 .. list-table:: 
     :width: 60%
     :align: center
+    :class: table-line
 
-    *   -   Top
+    *   -   **Top**
     *   -   |List00|
-    *   -   Bottom
+    *   -   **Bottom**
     *   -   |List01|
   
 .. |List00| image:: ../_static/imgs/List/List00.png
@@ -23,8 +24,8 @@ Machinery Parts
 ****************************************************************
 
 .. list-table:: 
-    :width: 100%
     :align: center
+    :class: table-line
 
     *   -   |List02|
         -   |List03|
@@ -64,8 +65,9 @@ Machinery Parts
 Transmission Parts
 
 .. list-table:: 
-    :width: 100%
     :align: center
+    :class: table-line
+    :header-rows: 1
 
     *   -   Servo package 1 x18
         -   Servo package 2 x2
@@ -81,49 +83,58 @@ Acrylic Parts
 .. image:: ../_static/imgs/List/List18.png
     :align: center
 
+.. _Electronic:
+
 Electronic Parts
 ****************************************************************
 
 .. note::
 
-  :red:`There are two models of connection boards, remember their version numbers.`
+  :combo:`red font-bolder:There are two models of connection boards, remember their version numbers.`
 
-+---------------------------+---------------------------------+--------------------------------+
-|  LED module x1            |  Camera x1                      | HC-SR04 Ultrasonic Module x1   |   
-|                           |                                 |                                |   
-|    |List19|               |   |List20|                      |   |List21|                     |   
-+---------------------------+----------------+----------------+--------------------------------+
-|  Connection board (PCB_V1.0)               |   Connection board (PCB_V2.0)                   |   
-|                                            |                                                 |   
-|    |List22|                                |    |List23|                                     |   
-+--------------------------------------------+-------------------------------------------------+
-|  Jumper wire F/F(4) for ultrasonic module                                                    |   
-|                                                                                              |   
-|    |List24|                                                                                  |   
-+----------------------------------------------------------------------------------------------+
-|  1.25mm 3Pin LED cable (same direction) x1                                                   |   
-|                                                                                              |   
-|    |List25|                                                                                  |   
-+----------------------------------------------------------------------------------------------+
-|  FPC 25cm 15Pin camera cable (reversed direction) x1                                         |   
-|                                                                                              |   
-|    |List26|                                                                                  |   
-+----------------------------------------------------------------------------------------------+
-|  FPC soft line x1                                                                            |   
-|                                                                                              |   
-|    |List27|                                                                                  |   
-|                                                                                              |
-|:red:`Please note that this cable only come with the purchase of the Raspberry Pi 5 version.` |
-+----------------------------------------------------------------------------------------------+
-|  Battery holder x2                                                                           |   
-|                                                                                              |   
-|    |List28|                                                                                  |   
-+----------------------------------------------------------------------------------------------+
+.. table::
+    :align: center
+    :class: table-line
+    :width: 80%
+
+    +---------------------------+---------------------------------+--------------------------------+
+    |  LED module x1            |  Camera x1                      | HC-SR04 Ultrasonic Module x1   |   
+    |                           |                                 |                                |   
+    |    |List19|               |   |List20|                      |   |List21|                     |   
+    +---------------------------+----------------+----------------+--------------------------------+
+    |  Connection board (PCB_V1.0)               |   Connection board (PCB_V2.0)                   |   
+    |                                            |                                                 |   
+    |    |List22|                                |    |List23|                                     |   
+    +--------------------------------------------+-------------------------------------------------+
+    |  Jumper wire F/F(4) for ultrasonic module                                                    |   
+    |                                                                                              |   
+    |    |List24|                                                                                  |   
+    +----------------------------------------------------------------------------------------------+
+    |  1.25mm 3Pin LED cable (same direction) x1                                                   |   
+    |                                                                                              |   
+    |    |List25|                                                                                  |   
+    +----------------------------------------------------------------------------------------------+
+    |  FPC 25cm 15Pin camera cable (reversed direction) x1                                         |   
+    |                                                                                              |   
+    |    |List26|                                                                                  |   
+    +----------------------------------------------------------------------------------------------+
+    |  FPC soft line x1                                                                            |   
+    |                                                                                              |   
+    |    |List27|                                                                                  |   
+    |                                                                                              |
+    |:red:`Please note that this cable only come with the purchase of the Raspberry Pi 5 version.` |
+    +----------------------------------------------------------------------------------------------+
+    |  Battery holder x2                                                                           |   
+    |                                                                                              |   
+    |    |List28|                                                                                  |   
+    +----------------------------------------------------------------------------------------------+
 
 .. |List19| image:: ../_static/imgs/List/List19.png
 .. |List20| image:: ../_static/imgs/List/List20.png
+    :width: 72%
 .. |List21| image:: ../_static/imgs/List/List21.png
 .. |List22| image:: ../_static/imgs/List/List22.png
+    :width: 72%
 .. |List23| image:: ../_static/imgs/List/List23.png
 .. |List24| image:: ../_static/imgs/List/List24.png
 .. |List25| image:: ../_static/imgs/List/List25.png
@@ -134,21 +145,27 @@ Electronic Parts
 Tools
 ****************************************************************
 
-+-----------------------------------------------+----------------------------------------------+
-| Cross screwdriver (2mm) x1                    | Cross screwdriver (4.5mm) x1                 |   
-|                                               |                                              |   
-|   |List29|                                    |  |List30|                                    |   
-+-----------------------------------------------+----------------------------------------------+
-| Cable Tidy x150cm                             | Multifunctional Spanner x1                   |   
-|                                               |                                              |   
-|   |List31|                                    |  |List32|                                    |   
-+-----------------------------------------------+----------------------------------------------+
+.. table::
+    :align: center
+    :class: table-line
+    :width: 70%
+
+    +-----------------------------------------------+----------------------------------------------+
+    | Cross screwdriver (2mm) x1                    | Cross screwdriver (4.5mm) x1                 |   
+    |                                               |                                              |   
+    |   |List29|                                    |  |List30|                                    |   
+    +-----------------------------------------------+----------------------------------------------+
+    | Cable Tidy x150cm                             | Multifunctional Spanner x1                   |   
+    |                                               |                                              |   
+    |   |List31|                                    |  |List32|                                    |   
+    +-----------------------------------------------+----------------------------------------------+
 
 .. |List29| image:: ../_static/imgs/List/List29.png
 .. |List30| image:: ../_static/imgs/List/List30.png
-    :width: 80%
+    :width: 70%
 .. |List31| image:: ../_static/imgs/List/List31.png
 .. |List32| image:: ../_static/imgs/List/List32.png
+    :width: 50%
 
 Calibration Graph
 ****************************************************************
@@ -159,19 +176,24 @@ Calibration Graph
 Required but NOT Contained Parts
 ****************************************************************
 
-+-------------------------------------------------------------------------------------------+
-| Four 18650 lithium batteries without protection board.                                    | 
-|                                                                                           |
-| Discharge current is greater than 15A                                                     |
-|                                                                                           |   
-|    |List34|                                                                               |   
-+-------------------------------------------------------------------------------------------+
-| Raspberry Pi (:red:`Recommended model: Raspberry 5 / 4B / 3B+`) x1                        |   
-|                                                                                           |   
-|    |List35|                                                                               |   
-+-------------------------------------------------------------------------------------------+
+.. table::
+    :align: center
+    :class: table-line
+    :width: 70%
+
+    +-------------------------------------------------------------------------------------------+
+    | Four 18650 lithium batteries without protection board.                                    | 
+    |                                                                                           |
+    | Discharge current is greater than 15A                                                     |
+    |                                                                                           |   
+    |    |List34|                                                                               |   
+    +-------------------------------------------------------------------------------------------+
+    | Raspberry Pi (:red:`Recommended model: Raspberry 5 / 4B / 3B+`) x1                        |   
+    |                                                                                           |   
+    |    |List35|                                                                               |   
+    +-------------------------------------------------------------------------------------------+
 
 .. |List34| image:: ../_static/imgs/List/List34.png
-    :width: 50%
+    :width: 30%
 .. |List35| image:: ../_static/imgs/List/List35.png
 

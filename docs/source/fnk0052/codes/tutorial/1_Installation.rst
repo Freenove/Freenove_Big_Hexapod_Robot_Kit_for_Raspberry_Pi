@@ -8,13 +8,15 @@ In this chapter, we will make some necessary preparation: start your Pi Raspberr
 
 .. note::   
 
-    1.Please use Raspberry Pi OS with Desktop
+    1. :combo:`red font-bolder:Please use Raspberry Pi OS with Desktop`
     
-    2.The installation of libraries takes much time. You can power Raspberry Pi with a power supply Cable. 
+    2. The installation of libraries takes much time. :combo:`red font-bolder:You can power Raspberry Pi with a power supply Cable.`
     
-    3.If you are using remote desktop to login Raspberry Pi, you need to use VNC viewer.
+    3. If you are using **remote desktop** to login Raspberry Pi, you need to use :ref:`VNC viewer <VNC>`.
 
-You can refer to this video. https://www.youtube.com/watch?v=cVrwOoORItE
+You can watch this video while reading this chapter.
+
+**We will help you with any concerns via** support@freenove.com
 
 .. raw:: html
 
@@ -33,7 +35,7 @@ The terminal is shown below:
 .. image:: ../_static/imgs/1_Software_installation/Chapter1_02.png
     :align: center
 
-Open the terminal and type the following commands to obtain the car code. And the code will be placed in the directory "Pi". (Note: Here are two commands. Please execute them in order.)
+Enter the following commands in the terminal to obtain the robot’s code and save it to the user’s directory” Pi”. (Note that here are two commands, please enter them one by one in order.)
 
 .. code-block:: console
 
@@ -49,7 +51,7 @@ You can also find and download the code by visiting our official website (http:/
 
 .. note:: 
 
-    Please note that this tutorial is based on python3. If you want to use python2, please download another version of the tutorial.
+    :combo:`red font-bolder:All codes of the robot are written with Python3. If run with Python2, it may cause errors.`
 
 Set Python3 as default python (Necessary)
 ================================================================
@@ -94,13 +96,13 @@ If you want to set python2 as default python in **other projects**, just repeat 
 Shortcut Key
 ----------------------------------------------------------------
 
-Now, we will introduce several shortcuts that are very useful and commonly used in terminal.
+Now, we will introduce several shortcuts that are very :combo:`red font-bolder:useful` and :combo:`red font-bolder:commonly used` in terminal.
 
-1. up and down arrow keys. History commands can be quickly brought back by using up and down arrow keys, which are very useful when you need to reuse certain commands.
+1. **up and down arrow keys.** History commands can be quickly brought back by using up and down arrow keys, which are very useful when you need to reuse certain commands.
 
-When you need to type commands, pressing “↑” will go backwards through the history of typed commands, and pressing “↓” will go forwards through the history of typed command.
+  When you need to type commands, pressing “**↑**” will go backwards through the history of typed commands, and pressing “**↓**” will go forwards through the history of typed command.
 
-2. Tab key. The Tab key can automatically complete the command/path you want to type. When there are multiple commands/paths conforming to the already typed letter, pressing Tab key once won’t have any result. And pressing Tab key again will list all the eligible options. This command/path will be completely typed as soon as you press the Tab key when there is only one eligible option.
+2. **Tab key.** The Tab key can automatically complete the command/path you want to type. When there are multiple commands/paths conforming to the already typed letter, pressing Tab key once won’t have any result. And pressing Tab key again will list all the eligible options. This command/path will be completely typed as soon as you press the Tab key when there is only one eligible option.
 
 As shown below, under the '~'directory, enter the Documents directory with the “cd” command. After typing “cd D”, press Tab key, then there is no response. Press Tab key again, then all the files/folders that begin with “D” is listed. Continue to type the character "oc", then press the Tab key, and then “Documents” is completely typed automatically.
 
@@ -121,19 +123,44 @@ Enable I2C and VNC
 The I2C interface Raspberry Pi is disabled by default. You need to open it manually. 
 
 .. image:: ../_static/imgs/1_Software_installation/Chapter1_08.png
+    :align: center
 
 .. image:: ../_static/imgs/1_Software_installation/Chapter1_09.png
     :align: center
 
+.. note:: 
+    
+    :combo:`red font-bolder:If your connector version is V2.0, remember to turn on the SPI feature. If your connector version is V1.0, turn off the SPI feature.`
+
+Set I2C Baud Rate
+=================================================================
+
+Open the terminal and enter the following command.
+
+.. code-block:: console
+    
+    $ sudo nano /boot/firmware/config.txt
+
+The default I2C Baud Rate is 100000. Now we change it to 400000, because this can speed up the response speed of the servos to make robot dog walk faster. If the baud rate is 100,000, the robot walks slowly.
+
+Scrolling the middle of the mouse to find **dtparam=i2c_arm=on, and add “i2c_arm_baudrate=400000”**.
+
+.. image:: ../_static/imgs/1_Software_installation/Chapter1_15.png
+    :align: center
+
+:combo:`red font-bolder:Press "CTRL"+"O" and then "Enter" to save the modified content. Then press "CTRL"+"X" to exit editing.`
+
+After the modification is completed, reboot Raspberry Pi to make the change work. You can also reboot the Raspberry Pi after completing the step 3 below.
+
 Type a command to check whether the I2C module is enabled:
 
 .. code-block:: console
-
+    
     $ lsmod | grep i2c
 
 If I2C module has been enabled, the following content will show up (the numbers showing in your device may be different):
 
-.. image:: ../_static/imgs/1_Software_installation/Chapter1_10.png
+.. image:: ../_static/imgs/1_Software_installation/Chapter1_16.png
     :align: center
 
 Install I2C-Tools
@@ -155,20 +182,6 @@ Type the following command to install python-smbus:
 .. code-block:: console
 
     $ sudo apt-get install python3-smbus
-
-Communication test
-----------------------------------------------------------------
-
-The smart car board has two chips, PCF8591 and PCA9685. Their I2C addresses are 0X48 and 0X40 respectively. Command “i2cdetect -y 1” can detect whether the board is successfully connected to Raspberry Pi.
-
-.. code-block:: console
-
-    $ i2cdetect -y 1
-
-.. image:: ../_static/imgs/1_Software_installation/Chapter1_11.png
-    :align: center
-
-If an I2C device is connected to your RPI, its I2C address will be displayed here.
 
 Additional supplement 
 ----------------------------------------------------------------
@@ -217,7 +230,7 @@ It will take effect after restarting, and you can restart after executing the ne
 
 If you want to restart the audio module, just restore the content modified in the above two steps.
 
-Step 3 Run the Libraries Installation Program
+Step 3 Execute the Installed Program
 ****************************************************************
 
 1.	Execute following commands to enter directory of “setup.py”.
@@ -232,13 +245,54 @@ Step 3 Run the Libraries Installation Program
 
     $ sudo python setup.py
 
-This program will automatically install the pca9685, rpi_ws281x, PyQt5 library, etc. Please reboot the Raspberry Pi after the installation is completed, as shown below.
+This program will automatically install the rpi_ws281x, PyQt5 library, etc. Please reboot the Raspberry Pi after the installation is completed, as shown below.
 
-.. image:: ../_static/imgs/1_Software_installation/Chapter1_14.png
+If it is your first time to run the script, it will ask you to input the camera type. At this point, input the content according to the camera you have. (The one included in this kit is of the type ov5647).
+
+.. image:: ../_static/imgs/1_Software_installation/Chapter1_17.png
     :align: center
+
+.. list-table::
+    :header-rows: 1
+    :align: center
+    :class: table-line
+
+    * - OV5647
+      - Imx219
+
+    * - |Chapter1_18|
+      - |Chapter1_19|
+
+.. |Chapter1_18| image:: ../_static/imgs/1_Software_installation/Chapter1_18.png
+.. |Chapter1_19| image:: ../_static/imgs/1_Software_inst   allation/Chapter1_19.png
+
+If your Rpi is a Pi 5, it will ask you which camera interface to use. You can type in cam0 or cam1 based on the interface you want to use.
+
+.. note::
+    
+    :combo:`red font-bolder:Make sure you connect the camera cable to the corresponding interface.`
+
+If it is not Raspberry Pi, this setting is not needed, as there is only camera interface available.
+
+.. image:: ../_static/imgs/1_Software_installation/Chapter1_20.png
+    :align: center
+
+.. image:: ../_static/imgs/1_Software_installation/Chapter1_21.png
+    :align: center
+
+Reboot your Raspberry Pi after installing the libraries.
+
+.. code-block:: console
+    
+    sudo reboot
+
+.. image:: ../_static/imgs/1_Software_installation/Chapter1_22.png
+    :align: center
+
+:combo:`red font-bolder:The reboot of the pi takes some time, please wait with patience.`
 
 If the installation fails, please rerun setup.py. After the installation is completed, restart the Raspberry Pi. Most installation failures are caused by network reasons.
 
 .. code-block:: console
-
-    $ sudo python setup.py
+    
+    sudo python setup.py

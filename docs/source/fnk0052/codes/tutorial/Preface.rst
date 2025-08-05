@@ -12,7 +12,7 @@ And if you encounter any problems, please feel free to contact us for fast and f
 
 The contents in this book can help enthusiasts with little technical knowledge to make a smart car. If you are very interested in Raspberry Pi, and want to learn how to program and build the circuit, please visit our website www.freenove.com or contact us to buy the kits designed for beginners: 
 
-**Freenove Basic\LCD1602\Super\Ultrasonic\RFID\Ultimate Starter Kit for Raspberry Pi**
+**Freenove Basic\\LCD1602\\Super\\Ultrasonic\\RFID\\Ultimate Starter Kit for Raspberry Pi**
 
 Raspberry Pi Introduction
 ****************************************************************
@@ -26,8 +26,9 @@ The A type and B type versions of the first generation products have been discon
 Below are the raspberry pi pictures and model pictures supported by this product. They have 40 pins.
 
 .. list-table:: 
-    :width: 100%
+    :width: 80%
     :align: center
+    :class: table-line
 
     *   -   Practicality picture of Raspberry Pi 5:
         -   Model diagram of Raspberry Pi 5:
@@ -132,44 +133,5 @@ Each pin's functional assignment is defined in the image below:
 
     .. image:: ../_static/imgs/Preface/Preface25.png
         :align: center
-
-    .. image:: ../_static/imgs/Preface/Preface26.png
-        :align: center
-
-.. seealso:: 
-    For more details about pin definition of GPIO, please refer to `<http://pinout.xyz/>`_
-
-PHYSICAL Numbering
----------------------------------------------------------------
-Another way to refer to the pins is by simply counting across and down from pin 1 at the top left (nearest to the SD card). This is 'Physical Numbering', as shown below:
-
-.. image:: ../_static/imgs/Preface/Preface27.png
-    :align: center
-
-WiringPi GPIO Numbering
----------------------------------------------------------------
-Different from the previous two types of GPIO serial numbers, RPi GPIO serial number of the WiringPi are numbered according to the BCM chip use in RPi.
-
-.. image:: ../_static/imgs/Preface/Preface28.png
-    :align: center
-
-.. seealso:: 
-    For more details, please refer to `<https://projects.drogon.net/raspberry-pi/wiringpi/pins/>`_ 
-
-You can also use the following command to view their correlation.
-
-.. code-block:: console
-
-    $ gpio readall
-
-.. seealso:: 
-
-    For more details about pin definition of GPIO, please refer to `<https://github.com/WiringPi/WiringPi>`_
-
-
-
-
-
-
-
-
+    
+For more details about pin definition of GPIO, please refer to http://pinout.xyz/

@@ -2,15 +2,15 @@
 Chapter 4 Hexapod Robot
 ##############################################################################
 
-You can refer to these videos to open client and calibrate the robot:
+**You can refer to these videos to open client and calibrate the robot:**
 
-Client control: https://youtu.be/KlxxgnW6uyo
+**Client control:**
 
 .. raw:: html
 
    <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/KlxxgnW6uyo" frameborder="0" allowfullscreen></iframe>
 
-Calibration: https://youtu.be/NdXG3wmdufI
+**Calibration:**
 
 .. raw:: html
 
@@ -28,7 +28,7 @@ Server
 
 The server runs on the Raspberry Pi. It sends the camera data and ultrasonic module data to the client, and receive commands from client.
 
-**The code in the Server folder is used as an example, or if you has a Raspberry Pi5, refer to the code in the server-PI5 folder. **
+**The code in the Server folder is used as an example, or if you has a Raspberry Pi5, refer to the code in the server-PI5 folder.**
 
 Code
 ================================================================
@@ -38,22 +38,24 @@ Part of the server code is as follows:
 .. literalinclude:: ../../../freenove_Kit/Code/Server/Server.py
     :linenos: 
     :language: python
-    :lines: 42-77
+    :lines: 45-77
+    :dedent:
 
 Reference
 ----------------------------------------------------------------
 
 For more code, please check “Server.py” in the Server directory.
+
 .. py:function:: get_interface_ip()	
 
     To obtain the IP address of RPi's WLAN0
 
-.. py:function:: turn_on_server()
+.. py:function:: start_server()	
 
     To turn ON TCP to wait for the connection of Client 
 
-.. py:function:: turn_off_server()	
-    
+.. py:function:: stop_server()	
+
     To turn OFF TCP
 
 .. py:function:: send_data()	
@@ -64,11 +66,11 @@ For more code, please check “Server.py” in the Server directory.
 
     To restart TCP
 
-.. py:function:: transmission_video()	
+.. py:function:: transmit_video()	
 
     To send video data to client
 
-.. py:function:: receive_instruction()	
+.. py:function:: receive_commands()	
 
     To receive commands from client
 
@@ -78,25 +80,25 @@ Open Server
 Step 1 Login Raspberry Pi via VNC viewer 
 ----------------------------------------------------------------
 
-:red:`Because server and client use GUI. You need use VNC viewer as remote desktop way.`
+:combo:`red font-bolder:Because server and client use GUI. You need use VNC viewer as remote desktop way.`
 
 Download and install VNC Viewer according to your computer system by clicking following link:
 
 https://www.realvnc.com/en/connect/download/viewer/
 
-After installation is completed, open VNC Viewer. And click File  New Connection. Then the interface is shown below. 
+After installation is completed, open VNC Viewer. And click File -> New Connection. Then the interface is shown below. 
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_01.png
     :align: center
 
 Enter IP address of your Raspberry Pi and fill in a Name. And click OK.
 
-Then on the VNC Viewer panel, double-click new connection you just created, and the following dialog box pops up. Enter username: pi and Password: raspberry. And click OK.     
+Then on the VNC Viewer panel, double-click new connection you just created, and the following dialog box pops up. Enter username: :combo:`blue font-bolder:pi` and Password: :combo:`blue font-bolder:raspberry`. And click OK.     
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_02.png
     :align: center
 
-:red:`If the resolution ratio is not great or there is just a little window, you can set a proper resolution ratio via steps below.`
+:combo:`red font-bolder:If the resolution ratio is not great or there is just a` **little window**:combo:`red font-bolder:, you can set a proper resolution ratio via steps below.`
 
 Select Screen Configuration. Select the appropriate resolution in the new window. Click Apply. 
 
@@ -152,9 +154,10 @@ or Run main,py with following command:
 
 "-t" means open TCP communication. "-n" means don't show interface.
 
-Sever Auto Start 
+Sever Auto Start
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1	Open the terminal and execute the following two commands respectively to create a “start.sh” file.
+1. Open the terminal and execute the following two commands respectively to create a “start.sh” file.
 
 .. code-block:: console
 
@@ -176,16 +179,6 @@ Sever Auto Start
     pwd
     sleep 10
     sudo cp point.txt /home/pi
-    sudo python main.py
-
-Note that if you are a Raspberry PI 5, use the following contents.
-
-.. code-block:: shell
-
-    #!/bin/sh
-    cd "/home/pi/Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi/Code/Server-Pi5"
-    pwd	
-    sleep 10
     sudo python main.py
 
 Press Ctrl + O and then press Enter to save it. Press Ctrl+X to exit.
@@ -308,12 +301,12 @@ When the Client is opened successfully, you need to turn on Raspberry Pi and ope
 
 .. note::
     
-    :red:`when Raspberry Pi is shut down, server will be closed. You need open server again the next time.`
+    :combo:`red font-bolder:When Raspberry Pi is shut down, server will be closed. You need open server again the next time.`
 
 2. Install python3 and some related python libraries and execute the program through python3 editor. 
 --------------------------------------------------------------------------------------------------------------------------------
 
-This section will be completed in your **computer with windows system**, :red:`not Raspberry Pi.`
+This section will be completed in your **computer with windows system**, :combo:`red font-bolder:not Raspberry Pi.`
 
 Running client on Windows system requires the installation of some software and libraries, which take some time. At this point, it does not require to run server and use the Raspberry Pi, so you can turn OFF RPi temporarily. After installing successfully, turn ON the RPi and run the Server.
 
@@ -327,7 +320,7 @@ https://www.python.org/downloads/windows/
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_10.png
     :align: center
 
-Click Latest Python  Release - Python 3.8.1
+Click Latest Python Release - Python 3.8.1
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_11.png
     :align: center
@@ -342,7 +335,7 @@ Check “Add Python 3.8 to PATH” and install according to your needs.
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_13.png
     :align: center
 
-Check all the options and click “Next”. 
+Check all the options and click “Next”.
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_14.png
     :align: center
@@ -360,7 +353,7 @@ Wait for the installation,
 Installation finishes.
 
 Install libraries including PyQt5 library, opencv library, numpy library, etc.
---------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 
 If have not download the zip file, download it via below:
 
@@ -395,11 +388,13 @@ Press “win + R” and enter cmd, and click ok. Then enter following commands.
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_17.png
     :align: center
 
-Or you can enter “Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi\Code\” directory and double click “setup_windows.py” to execute the installer.
+Or you can enter “Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi\\Code\\” directory and double click “setup_windows.py” to execute the installer.
 
 Or open “setup_windows.py” with python3 and execute it.
 
-:red:`Caution: If the default python of your Windows system is not python3 but python2, change the command "setup_windows.py" as follows and replace all “python” in setup_windows.py to “python3”.`
+.. caution::
+
+    :combo:`red font-bolder:If the default python of your Windows system is not python3 but python2, change the command "setup_windows.py" as follows and replace all “python” in setup_windows.py to “python3”.`
 
 .. code-block:: console
 
@@ -438,15 +433,15 @@ Press “win + R” and enter cmd, and click ok. Then enter following commands.
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_19.png
     :align: center
 
-Or you can enter “Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi\Code\Client” directory and double-click “Main.py”.
+Or you can enter “Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi\\Code\\Client” directory and double-click “Main.py”.
 
 Or use python3 to open and execute “Main.py”.
 
 .. note::
     
-    :red:`If the default python of your Windows system is not Python3 but python2, change the command`
+    :combo:`red font-bolder:If the default python of your Windows system is not Python3 but python2, change the command`
 
-Main.py as follows:
+**Main.py as follows:**
 
 .. code-block:: console
 
@@ -457,11 +452,11 @@ The client interface is shown as below:
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_20.png
     :align: center
 
-When the Client is opened successfully, you need to turn on Raspberry Pi and open the server. Enter Raspberry Pi’s IP address in the white IP editor and click “Connect” to connect the robot with RPi. After connecting successfully, you need to calibrate the robot's six legs before control it to move.
+When the Client is opened successfully, you need to turn on Raspberry Pi and open the server. Enter Raspberry Pi's IP address in the white IP editor and click “Connect” to connect the robot with RPi. After connecting successfully, you need to calibrate the robot's six legs before control it to move.
 
 .. note::
     
-    when Raspberry Pi is shut down, server will be closed. You need open server again the next time.
+    :combo:`red font-bolder:When Raspberry Pi is shut down, server will be closed. You need open server again the next time.`
 
 Run Client on macOS system
 ================================================================
@@ -471,14 +466,14 @@ Running client on macOS system requires the installation of some software and li
 Install python3
 ----------------------------------------------------------------
 
-Download installer, link https://www.python.org/downloads/
+Download the installation package via: https://www.python.org/downloads/
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_21.png
     :align: center
 
-:x-large:`If your macOS is 11. Like 11.0, please install python 3.9.` 
+:combo:`x-large font-bolder:If your macOS is 11. Like 11.0, please install` :combo:`red x-large font-bolder:python 3.9.` 
 
-:x-large:`If your macOS is NOT 11, like 10.15, please install python 3.8. If you have installed python 3.9. You need uninstall it first.`
+:combo:`x-large font-bolder:If your macOS is NOT 11, like 10.15, please install` :combo:`red x-large font-bolder:python 3.8.` :combo:`purple x-large font-bolder:If you have installed python 3.9. You need uninstall it first.`
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_22.png
     :align: center
@@ -562,9 +557,9 @@ The installation takes some time, please wait with patience.
 
 When all the libraries are installed successfully, you can see the prompt “All libraries installed successfully” on the screen. If there is any library fails to install, it will print “Some libraries have not been installed yet. Please run ' python3 setup_macos.py' again” on the screen, then you need to execute the command python3 setup_macos.py again. 
 
-If you are using macOS under 11.0, like 10.15.  Just skip to “Open client”. 
+If you are using :combo:`blue font-bolder:macOS under 11.0, like 10.15.`  Just skip to “Open client”. 
 
-If you are using macOS 11.0 or later version. Please run commands below:
+If you are using :combo:`blue font-bolder:macOS 11.0 or later version`. Please run commands below:
 
 .. code-block:: console
 
@@ -592,7 +587,6 @@ Installing successfully, now you are in the directory where setup_macos.py locat
 
 .. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_33.png
     :align: center
-
 
 When the Client is opened successfully, you need to turn on Raspberry Pi and open the server. Enter Raspberry Pi’s IP address in the white IP editor and click “Connect” to connect the robot with RPi. After connecting successfully, you need to calibrate the robot's six legs before control it to move.
 
@@ -681,10 +675,11 @@ Control
 The following is the corresponding operation of the buttons and keyboards. 
 
 .. list-table:: 
-    :width: 100%
+    :width: 60%
     :widths: 50 20 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Button on Client
         -   Key
@@ -749,10 +744,10 @@ The following is the corresponding operation of the buttons and keyboards.
 The function of SliderBar is below:
 
 .. list-table:: 
-    :width: 100%
-    :widths: 40 70
+    :width: 60%
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   SliderBar
         -   Function
@@ -832,10 +827,11 @@ Some important functions included in the py files are listed below. For more det
 ADS7830.py
 
 .. list-table:: 
-    :width: 100%
+    :width: 70%
     :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -849,10 +845,11 @@ ADS7830.py
 Buzzer.py
 
 .. list-table:: 
-    :width: 100%
+    :width: 70%
     :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -863,10 +860,11 @@ Buzzer.py
 Contorl.py
 
 .. list-table:: 
-    :width: 100%
-    :widths: 20 70
+    :width: 70%
+    :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -904,10 +902,11 @@ Contorl.py
 IMU.py
 
 .. list-table:: 
-    :width: 100%
-    :widths: 20 70
+    :width: 70%
+    :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -918,10 +917,11 @@ IMU.py
 Led.py
 
 .. list-table:: 
-    :width: 100%
-    :widths: 20 70
+    :width: 70%
+    :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -971,10 +971,11 @@ Led.py
 Servo.py
 
 .. list-table:: 
-    :width: 100%
-    :widths: 20 70
+    :width: 70%
+    :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -985,10 +986,11 @@ Servo.py
 Ultrasonic.py
 
 .. list-table:: 
-    :width: 100%
-    :widths: 20 70
+    :width: 70%
+    :widths: 40 70
     :align: center
     :header-rows: 1
+    :class: zebra
 
     *   -   Function
         -   Description
@@ -1021,11 +1023,3 @@ The interface of the APP is shown below:
     :align: center
 
 The servos and the Raspberry Pi are powered by two separate, independent power supplies. When the servos are powered OFF, the power supply of RPi remains its original state.
-
-
-
-
-
-
-
-

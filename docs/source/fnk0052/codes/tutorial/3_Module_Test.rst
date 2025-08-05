@@ -8,13 +8,13 @@ Before starting, please plug in the batteries, and switch ON S1 and S2. Place th
 
 If you have never learned python before, you can learn some basic knowledge via the link below: https://python.swaroopch.com/basics.html
 
-You can watch this video while reading this chapter: https://youtu.be/D00LdVqXC5E
+You can watch this video while reading this chapter.
 
 .. raw:: html
 
    <iframe style="display: block; margin: 0 auto;" height="421.875" width="750" src="https://www.youtube.com/embed/D00LdVqXC5E" frameborder="0" allowfullscreen></iframe>
 
-We will help you with any concerns via support@freenove.com
+**We will help you with any concerns via** support@freenove.com
 
 Servo
 ****************************************************************
@@ -56,7 +56,7 @@ If the terminal displays the directory as below (where test.py is located). You 
     :align: center
 
 Result
-================================================================
+----------------------------------------------------------------
 
 In the previous chapter, we have assembled the robot and executed the servo installation program, which makes the six legs of the robot straight.
 
@@ -121,9 +121,9 @@ If the terminal displays the directory as below (where test.py is located). You 
     :align: center
 
 Result
-================================================================
+----------------------------------------------------------------
 
-Print out the voltage value of two sets of batteries every one second,You can press "Ctrl + C" to end program.
+Print out the voltage value of two sets of batteries every one second, You can press "Ctrl + C" to end program.
 
 Code
 ================================================================
@@ -132,14 +132,15 @@ Code
     :linenos: 
     :language: python
     :lines: 77-86
+    :dedent:
 
 Reference
 ----------------------------------------------------------------
 
-.. py:function:: batteryPower()
+.. py:function:: read_battery_voltage()
 
     Return the voltage value of the battery, retaining two decimal places.
-
+    
 Ultrasonic module
 ****************************************************************
 
@@ -169,7 +170,7 @@ If the terminal displays the directory as below (where test.py is located). You 
     :align: center
 
 Result
-================================================================
+----------------------------------------------------------------
 
 Every 1s, the distance between the obstacle and the ultrasonic module will be printed in, and you can press "Ctrl + C" to end the program.
 
@@ -181,12 +182,12 @@ The code is as below:
 .. literalinclude:: ../../../freenove_Kit/Code/Server/test.py
     :linenos: 
     :language: python
-    :lines: 32-41
+    :lines: 33-41
 
 Reference
 ----------------------------------------------------------------
 
-.. py:function:: batteryPower()
+.. py:function:: get_distance()
 
     This function is used to obtain the distance of ultrasonic module and front obstacle, with unit CM.
 
@@ -195,7 +196,7 @@ Led
 
 .. note::
     
-    :red:`Raspberry PI 5 is temporarily unavailable because the Library rpi-ws281x-python does not support Raspberry PI 5. Please skip this section.`
+    :combo:`red font-bolder:Raspberry PI 5 is temporarily unavailable because the Library rpi-ws281x-python does not support Raspberry PI 5. Please skip this section.`
 
 There is an LED module on the robot, as shown below:
 
@@ -233,9 +234,10 @@ If you are using the Led feature for the first time, it will ask for the PCB ver
 Please enter 1 or 2 according to the version number of your connection board.
 
 .. list-table:: 
-    :width: 100%
-    :widths: 50 50
+    :width: 60%
     :align: center
+    :header-rows: 1
+
 
     *   -   Connection board (PCB_V1.0)  
         -   Connection board (PCB_V2.0)
@@ -244,6 +246,7 @@ Please enter 1 or 2 according to the version number of your connection board.
         -   |List23|
 
 .. |List22| image:: ../_static/imgs/List/List22.png
+    :width: 83%
 .. |List23| image:: ../_static/imgs/List/List23.png
 
 |
@@ -254,11 +257,11 @@ Please enter 1 or 2 according to the version number of your connection board.
 :red:`If your connection board version is V2.0 and you do not have the SPI feature turned on, the LedPixel will not show the color. Refer here to turn on the SPI`
 
 Result
-================================================================
+----------------------------------------------------------------
 
 The LED lights up with the color of red, green, blue and white in turn and then it turns OFF. You can end the program ahead of time by pressing "ctrl+c". 
 
-If the LED color display order is not correct, open the "Led.py" file in the current directory and modify the value of the "self.ORDER" variable on line 16.
+If the LED color display order is not correct, open the "**Led.py**" file in the current directory and modify the value of the "self.ORDER" variable on line 16.
 
 Code
 ================================================================
@@ -268,7 +271,7 @@ The code of test.py is as below:
 .. literalinclude:: ../../../freenove_Kit/Code/Server/test.py
     :linenos: 
     :language: python
-    :lines: 2-30
+    :lines: 3-30
 
 Reference
 ----------------------------------------------------------------
@@ -306,7 +309,7 @@ If the terminal displays the directory as below (where test.py is located). You 
     :align: center
 
 Result
-================================================================
+----------------------------------------------------------------
 
 The buzzer will be turn on lasting for 3s. Then the program will automatically end or you can press "Ctrl + C" to end the program.
 
@@ -316,57 +319,17 @@ Code
 .. literalinclude:: ../../../freenove_Kit/Code/Server/test.py
     :linenos: 
     :language: python
-    :lines: 88-103
+    :lines: 89-103
 
 Reference
 ----------------------------------------------------------------
 
-.. py:function:: buzzer.run(cmd)
+.. py:function:: buzzer.set_state(cmd)
 
-    This function has one input parameter. If the input is '1', the buzzer will be turned on. If the input is '0', the buzzer will be turned off. 
+    This function has one input parameter. If the input is True, the buzzer will be turned on. If the input is False, the buzzer will be turned off. 
 
 Camera
 ****************************************************************
-
-There are two ways to drive the camera.
-
-First method, use the system's default camera detection function.
-
-1.	Open the config.txt file.
-
-.. code-block:: console
-
-    $ sudo nano /boot/firmware/config.txt
-
-2.	Enable the automatic camera detection function.
-
-.. code-block:: console
-
-    camera_auto_detect=1
-
-Second method, manually configure the camera.
-
-1.	Disable the automatic camera detection function.
-
-.. code-block:: console
-
-    camera_auto_detect=0
-
-2.	Add the following instruction at the very bottom.
-
-If you are a Raspberry PI 5, add the following command.
-
-.. code-block:: console
-
-    dtoverlay = ov5647,cam0
-
-If you are not a Raspberry PI 5, add the following command.
-
-.. code-block:: console
-
-    dtoverlay = ov5647
-
-3.	Save the file and exit, then restart the Raspberry PI.
 
 Run program
 ================================================================
@@ -392,7 +355,7 @@ Then please open and check the generated image.jpg under
 
 Then please open and check the generated image.jpg under
 
- /Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi/Code/Server. 
+/Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi/Code/Server. 
 
 .. image:: ../_static/imgs/3_Module_Test/Chapter3_15.png
     :align: center

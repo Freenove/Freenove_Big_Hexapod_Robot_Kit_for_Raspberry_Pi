@@ -58,9 +58,12 @@ Installation of servos on the hip joints of the three left legs.
 .. image:: ../_static/imgs/2_Assembly/Chapter2_05.png
     :align: center
 
+.. image:: ../_static/imgs/2_Assembly/Chapter2_06.png
+    :align: center
+
 Assembly
 
-.. image:: ../_static/imgs/2_Assembly/Chapter2_06.png
+.. image:: ../_static/imgs/2_Assembly/Chapter2_44.png
     :align: center
 
 Installation of servos on the hip joints of the three right legs.
@@ -129,12 +132,15 @@ Install the comection board
 .. image:: ../_static/imgs/2_Assembly/Chapter2_17.png
     :align: center
 
-:red:`We have two types of connection boards, but they are installed in the same way.`
+**We have two types of connection boards, but they are installed in the same way.**
+
+See :ref:`here <Electronic>` for more information.
 
 .. list-table:: 
-    :width: 100%
-    :widths: 50 50
+    :width: 60%
     :align: center
+    :class: table-line
+    :header-rows: 1
 
     *   -   Connection board (PCB_V1.0)  
         -   Connection board (PCB_V2.0)
@@ -143,6 +149,7 @@ Install the comection board
         -   |List23|
 
 .. |List22| image:: ../_static/imgs/List/List22.png
+    :width: 83%
 .. |List23| image:: ../_static/imgs/List/List23.png
 
 Installing Brass Standoff
@@ -165,7 +172,10 @@ Step 4 Installing Battery Holder
 
 |
 
-.. image:: ../_static/imgs/2_Assembly/Chapter2_20.png
+.. image:: ../_static/imgs/2_Assembly/Chapter2_21.png
+    :align: center
+
+.. image:: ../_static/imgs/2_Assembly/Chapter2_45.png
     :align: center
 
 Step 5 Assembling Legs and Head to the Body
@@ -178,12 +188,12 @@ Before installing, fix the servos at the specified angle. At this point you need
 
 Plug batteries into the battery holder. And then plug the battery holder to control board.
 
-.. image:: ../_static/imgs/2_Assembly/Chapter2_21.png
+.. image:: ../_static/imgs/2_Assembly/Chapter2_22.png
     :align: center
 
 Press S1 and S2.
 
-.. image:: ../_static/imgs/2_Assembly/Chapter2_22.png
+.. image:: ../_static/imgs/2_Assembly/Chapter2_23.png
     :align: center
 
 Open Raspberry Pi. (All contents in Chapter 1 should be executed correctly first. If not, please return Chapter 1 to finish it first.)
@@ -199,20 +209,23 @@ b. Execute the following command to run “Servo.py”.
 .. code-block:: console
     
     $ sudo python Servo.py
- 
-Next, fix each servo to the corresponding disc servo arm. :red:`Do NOT pull the servo wires` during the installation process.
+
+.. image:: ../_static/imgs/2_Assembly/Chapter2_47.png
+    :align: center
+
+Next, fix each servo to the corresponding disc servo arm. :combo:`red font-bolder:Do NOT pull the servo wires` during the installation process.
 
 Installing Hip Joint
 ================================================================
 
 Connect the servo wires to corresponding servo port.
 
-.. image:: ../_static/imgs/2_Assembly/Chapter2_23.png
+.. image:: ../_static/imgs/2_Assembly/Chapter2_24.png
     :align: center
 
 |
 
-.. image:: ../_static/imgs/2_Assembly/Chapter2_24.png
+.. image:: ../_static/imgs/2_Assembly/Chapter2_46.png
     :align: center
 
 |
@@ -252,9 +265,9 @@ Installing head
 ================================================================
 
 .. list-table:: 
-    :width: 100%
     :widths: 50 50
     :align: center
+    :class: table-line
 
     *   -   |Chapter2_31|
         -   |Chapter2_32|
@@ -282,7 +295,7 @@ Connect camera wire
 .. image:: ../_static/imgs/2_Assembly/Chapter2_39.png
     :align: center
 
-:blue:`You need power off Raspberry Pi when wire camera.`
+:combo:`bg-blue font-bolder:You need power off Raspberry Pi when wire camera.`
 
 After connected, it should be as follows
 
@@ -305,7 +318,6 @@ Step 6 Installing Base and Cover Plates
     :align: center
 
 |
-
 
 .. image:: ../_static/imgs/2_Assembly/Chapter2_43.png
     :align: center
