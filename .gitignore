@@ -1,0 +1,36 @@
+# ROS 2 build artifacts
+/build/
+/install/
+/log/
+
+# Ignore local ROS workspace setup files
+/install/setup.bash
+/install/setup.sh
+/install/setup.zsh
+/install/local_setup.bash
+/install/local_setup.sh
+/install/local_setup.zsh
+/install/_local_setup_util.py
+/install/.colcon_install_layout
+
+# C/C++ build artifacts
+*.a
+*.so
+*.o
+*.out
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE and editor specific files
+.vscode/
+.idea/
+*.swp
+*~
+*.bak
+
+# OS-specific files
+.DS_Store
+Thumbs.db
