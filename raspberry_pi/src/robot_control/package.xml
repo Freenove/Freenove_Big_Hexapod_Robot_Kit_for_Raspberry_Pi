@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>robot_control</name>
+  <version>0.0.1</version>
+  <description>ROS2 node for controlling 32 servos with PCA9685</description>
+  <maintainer email="ogordillo@miners.utep.edu">Orlando E. Gordillo</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>robot_interfaces</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

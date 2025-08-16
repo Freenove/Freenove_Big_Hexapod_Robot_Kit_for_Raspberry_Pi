@@ -1,0 +1,9 @@
+# The servo channel (0-31)
+int32 channel
+# The desired angle in degrees (0-180)
+int32 angle
+---
+# True if the command was accepted
+bool success
+# A descriptive message
+string message

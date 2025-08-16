@@ -1,0 +1,21 @@
+FROM arm64v8/ros:foxy
+
+# Install python
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Middleware (cyclonedds)
+RUN apt-get update && apt-get install -y ros-foxy-rmw-cyclonedds-cpp
+
+# Install adafruit-servokit and stuff
+RUN pip3 install smbus
+
+# Setup ROS 2 workspace with the new package structure
+WORKDIR /root/ros2_ws
+COPY ./src /root/ros2_ws/src
+
+RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
+
+# Define entrypoint
+CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 run robot_control servo_node"]

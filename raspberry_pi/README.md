@@ -4,11 +4,29 @@
 
 ```sudo sh get-docker.sh```
 
-```sudo usermod -aG docker $USER``` IMPORTANT: Log out and log back in for the group changes to apply!
+```sudo usermod -aG docker $USER``` IMPORTANT: Log out and log back in for the group changes to apply or run ```newgrp docker```
 
 ```sudo apt-get update```
 
 ```sudo apt-get install -y docker-compose```
+
+## Running the Docker Image
+
+### docker-compose
+
+```cd <top_project_folder>```
+
+```docker-compose build --no-cache raspberry_pi```
+
+```docker-compose up raspberry_pi```
+
+### without docker-compose
+
+```cd <top_project_folder>/raspberry_pi```
+
+```docker build --no-cache -t raspberry_pi .```
+
+```docker run -it --rm --privileged --network host -e RMW_IMPLEMENTATION=rmw_cyclonedds_cpp -e CYCLONEDDS_URI=/cyclonedds.xml -v "/cyclonedds.xml" raspberry_pi```
 
 ### Explanations:
 

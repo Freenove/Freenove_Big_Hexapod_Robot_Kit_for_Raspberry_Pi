@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  raspberry_pi:
+    build: ./raspberry_pi
+    container_name: raspberry_pi
+    network_mode: host
+    privileged: true 
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///root/ros2_ws/cyclonedds.xml
+    volumes:
+      - ./cyclonedds.xml:/root/ros2_ws/cyclonedds.xml
