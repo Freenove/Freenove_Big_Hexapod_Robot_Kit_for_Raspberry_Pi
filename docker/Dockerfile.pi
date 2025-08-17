@@ -18,4 +18,4 @@ COPY ./src /root/ros2_ws/src
 RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
 
 # Define entrypoint
-CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 run robot_control servo_node"]
+CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 run pi_control servo_node"]

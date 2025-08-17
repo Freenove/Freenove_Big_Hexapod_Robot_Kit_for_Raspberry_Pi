@@ -1,9 +1,11 @@
 version: '3.8'
 
 services:
-  raspberry_pi:
-    build: ./raspberry_pi
-    container_name: raspberry_pi
+  pi_control:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.pi
+    container_name: pi_control
     network_mode: host
     privileged: true 
     environment:
@@ -12,16 +14,21 @@ services:
       - CYCLONEDDS_URI=file:///root/ros2_ws/cyclonedds.xml
     volumes:
       - ./cyclonedds.xml:/root/ros2_ws/cyclonedds.xml
-  windows_control:
-    build: ./windows_control
-    container_name: windows_control
+    
+  windows_command:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.wsl
+    container_name: windows_command
     network_mode: host
+    privileged: true # For X11 display
     environment:
       - DISPLAY
-      - LIBGL_ALWAYS_INDIRECT
+      - QT_X11_NO_MITSHM=1
       - ROS_DOMAIN_ID=42
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=file:///root/ros2_ws/cyclonedds.xml
+      - CYCLONEDDS_URI=/ros2_ws/cyclonedds.xml
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./cyclonedds.xml:/root/ros2_ws/cyclonedds.xml # Mount config file
+      - ./cyclonedds.xml:/ros2_ws/cyclonedds.xml
+    

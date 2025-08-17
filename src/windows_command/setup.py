@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'robot_control'
+package_name = 'windows_command'
 
 setup(
     name=package_name,
@@ -15,12 +15,12 @@ setup(
     zip_safe=True,
     maintainer='Orlando E. gordillo',
     maintainer_email='ogordillo@miners.utep.edu',
-    description='ROS2 node for controlling 32 servos with PCA9685',
+    description='ROS2 node to command the Hexpod robot via windows',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'servo_node = robot_control.servo_node:main',
+            'main_window = windows_command.main_window:main',
         ],
     },
 )

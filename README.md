@@ -19,23 +19,29 @@ This project aims to accomplish two core goals.
 
 ### Distributed Setup
 With ROS at the core, this project will comprise of the following functionality
-- windows_control: A pyqt5 application on a Windows PC (WSL2) to command the robot. 
-- raspberry_pi: A Raspberry Pi 5 receives commands to actuate motors. 
-- jetson_tx2: An nvidia Jetson TX2 streams depth data and runs AI models onboard 
+- windows_command: A pyqt5 application on a Windows PC (WSL2) to command the robot. 
+- pi_control: A Raspberry Pi 5 receives commands to actuate motors. 
+- jetson_vision: An nvidia Jetson TX2 streams depth data and runs AI models onboard 
+- robot_interfaces: all the service, msg, etc. type definitions for communication between nodes.
 
 This project uses CycloneDDS RMW (Middleware) for p2p discovery.
 
 ### Project Structure
 - Project
-  - windows_control
+  - docker
+    - docker.pi
+    - docker.tx2 (jetson)
+    - docker.wsl (windows)
+  - windows_command
     - Dockerfile
     - src
-  - raspberry_pi
+  - pi_control
     - Dockerfile
     - src
-  - jetson_tx2
+  - jetson_vision
     - Dockerfile
     - src
+  - docker-compose.yml
     
 
 ### Version (Foxy)
