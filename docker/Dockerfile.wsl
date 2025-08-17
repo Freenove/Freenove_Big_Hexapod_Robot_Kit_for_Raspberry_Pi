@@ -1,5 +1,4 @@
-# Base image for x86_64
-FROM osrf/ros:foxy-desktop
+FROM ros:foxy-ros-base
 
 # Install system dependencies, including PyQt5
 RUN apt-get update && apt-get install -y \
@@ -8,11 +7,13 @@ RUN apt-get update && apt-get install -y \
     python3-pyqt5 \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Middleware (cyclonedds)
+RUN apt-get update && apt-get install -y ros-foxy-rmw-cyclonedds-cpp
+
 # Copy and build the workspace
-COPY ./src /ros2_ws/src
-WORKDIR /ros2_ws
+WORKDIR /root/ros2_ws
+COPY ./src /root/ros2_ws/src
 RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
 
 # Set a default entrypoint
-CMD ["/bin/bash", "-c", "source /ros2_ws/install/setup.bash && \
-               ros2 run windows_command main_window"]
+CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 run windows_command main_window"]

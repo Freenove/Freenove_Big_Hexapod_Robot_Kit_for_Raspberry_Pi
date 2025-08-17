@@ -13,7 +13,7 @@ from robot_interfaces.srv import SetServo
 
 # ROS 2 Node running in a separate thread
 class RosNodeThread(QThread):
-    image_signal = pyqtSignal(np.ndarray)
+    # image_signal = pyqtSignal(np.ndarray)
 
     def __init__(self):
         super().__init__()

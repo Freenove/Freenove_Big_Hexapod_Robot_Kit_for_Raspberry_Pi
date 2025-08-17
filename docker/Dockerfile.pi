@@ -14,7 +14,6 @@ RUN pip3 install smbus
 # Setup ROS 2 workspace with the new package structure
 WORKDIR /root/ros2_ws
 COPY ./src /root/ros2_ws/src
-
 RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
 
 # Define entrypoint
