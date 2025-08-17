@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'robot_control'
+package_name = 'pi_control'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'servo_node = robot_control.servo_node:main',
+            'servo_node = pi_control.servo_node:main',
         ],
     },
 )

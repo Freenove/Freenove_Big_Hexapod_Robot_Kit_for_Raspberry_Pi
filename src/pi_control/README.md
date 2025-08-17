@@ -16,17 +16,17 @@
 
 ```cd <top_project_folder>```
 
-```docker-compose build --no-cache raspberry_pi```
+```docker-compose build pi_control```
 
-```docker-compose up raspberry_pi```
+```docker-compose up pi_control```
 
 ### without docker-compose
 
-```cd <top_project_folder>/raspberry_pi```
+```cd ./docker```
 
-```docker build --no-cache -t raspberry_pi .```
+```docker build -t pi_control -f Dockerfile.pi ..```
 
-```docker run -it --rm --privileged --network host -e RMW_IMPLEMENTATION=rmw_cyclonedds_cpp -e CYCLONEDDS_URI=/cyclonedds.xml -v "/cyclonedds.xml" raspberry_pi```
+```docker run -it --rm --privileged --network host -e RMW_IMPLEMENTATION=rmw_cyclonedds_cpp -e CYCLONEDDS_URI=/cyclonedds.xml -v "/cyclonedds.xml" pi_control```
 
 ### Explanations:
 

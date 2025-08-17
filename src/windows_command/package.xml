@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>robot_control</name>
+  <name>windows_command</name>
   <version>0.0.1</version>
-  <description>ROS2 node for controlling 32 servos with PCA9685</description>
+  <description>ROS2 node to command the Hexpod robot via windows</description>
   <maintainer email="ogordillo@miners.utep.edu">Orlando E. Gordillo</maintainer>
   <license>Apache License 2.0</license>
 
