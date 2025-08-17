@@ -16,7 +16,7 @@
 
 ```cd <top_project_folder>```
 
-```docker-compose build --no-cache pi_control```
+```docker-compose build pi_control```
 
 ```docker-compose up pi_control```
 
