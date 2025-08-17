@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>windows_control</name>
+  <version>0.0.1</version>
+  <description>ROS2 node to control the Hexpod robot via windows</description>
+  <maintainer email="ogordillo@miners.utep.edu">Orlando E. Gordillo</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>windows_control</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

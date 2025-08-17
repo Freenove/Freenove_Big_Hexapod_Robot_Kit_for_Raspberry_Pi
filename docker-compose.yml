@@ -12,3 +12,16 @@ services:
       - CYCLONEDDS_URI=file:///root/ros2_ws/cyclonedds.xml
     volumes:
       - ./cyclonedds.xml:/root/ros2_ws/cyclonedds.xml
+  windows_control:
+    build: ./windows_control
+    container_name: windows_control
+    network_mode: host
+    environment:
+      - DISPLAY
+      - LIBGL_ALWAYS_INDIRECT
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///root/ros2_ws/cyclonedds.xml
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./cyclonedds.xml:/root/ros2_ws/cyclonedds.xml # Mount config file

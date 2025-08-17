@@ -1,0 +1,19 @@
+FROM osrf/ros:foxy-desktop
+
+# Install pip and other dependencies
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-opencv \
+    && rm -rf /var/lib/apt/lists/*
+
+# Setup ROS 2 workspace with the new package structure
+COPY ./src /root/ros2_ws/src
+WORKDIR /root/ros2_ws
+RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
+
+# Define entrypoint to launch both nodes
+# Note: A real launch file is better for multiple nodes, but this works for simplicity.
+CMD ["/bin/bash", "-c", "source install/setup.bash && \
+     ros2 run robot_teleop teleop_node & \
+     ros2 run robot_teleop video_subscriber_node; \
+     fg"]
