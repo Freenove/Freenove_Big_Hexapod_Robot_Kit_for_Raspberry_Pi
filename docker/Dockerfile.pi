@@ -1,20 +1,59 @@
-FROM arm64v8/ros:foxy
+FROM ubuntu:24.04
 
-# Install python
+ENV DEBIAN_FRONTEND=noninteractive
+ENV REALSENSE_ROS_TAG 4.57.2
+ENV LIBREALSENSE_TAG v2.57.2
+
 RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    lsb-release \
+    git \
+    cmake \
+    build-essential \
+    libssl-dev \
+    libusb-1.0-0-dev \
+    pkg-config \
+    libgtk-3-dev \
+    libglfw3-dev \
     python3-pip \
+    python3-smbus \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Middleware (cyclonedds)
-RUN apt-get update && apt-get install -y ros-foxy-rmw-cyclonedds-cpp
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
-# Install adafruit-servokit and stuff
-RUN pip3 install smbus
+WORKDIR /
+RUN git clone --depth 1 --branch ${LIBREALSENSE_TAG} https://github.com/IntelRealSense/librealsense.git
+WORKDIR /librealsense
+RUN mkdir build && cd build && \
+    cmake ../ \
+        -DBUILD_EXAMPLES=false \
+        -DBUILD_GRAPHICAL_EXAMPLES=false \
+        -DCMAKE_BUILD_TYPE=Release && \
+    make -j$(nproc) && \
+    make install
 
-# Setup ROS 2 workspace with the new package structure
+RUN rm -rf /librealsense
+
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-ros-base \
+    ros-dev-tools \
+    ros-jazzy-realsense2-camera \
+    ros-jazzy-realsense2-description \
+    ros-jazzy-rmw-cyclonedds-cpp
+
 WORKDIR /root/ros2_ws
 COPY ./src /root/ros2_ws/src
-RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
 
-# Define entrypoint
-CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 run pi_control servo_node"]
+RUN git clone https://github.com/IntelRealSense/realsense-ros.git -b ${REALSENSE_ROS_TAG} src/realsense-ros
+RUN apt-get install python3-rosdep -y
+
+RUN \
+    . /opt/ros/jazzy/setup.sh && \ 
+    rosdep init && rosdep update && \
+    rosdep install -i --from-path src --rosdistro jazzy -y
+
+RUN . /opt/ros/jazzy/setup.sh && colcon build --symlink-install
+
+CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 launch pi_control robot_launch.py"]

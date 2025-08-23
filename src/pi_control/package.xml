@@ -6,7 +6,7 @@
   <maintainer email="ogordillo@miners.utep.edu">Orlando E. Gordillo</maintainer>
   <license>Apache License 2.0</license>
 
-  <buildtool_depend>ament_python</buildtool_depend>
+  <depend>ament_cmake_python</depend>
   <exec_depend>robot_interfaces</exec_depend>
   <member_of_group>rosidl_interface_packages</member_of_group>
 
