@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-opencv \
     python3-pyqt5 \
-    ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-fastdds-tools \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/ros2_ws

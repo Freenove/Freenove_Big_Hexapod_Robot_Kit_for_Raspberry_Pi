@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <participant profile_name="ros2_context1_participant" is_default_profile="true">
+        <rtps>
+            <builtin>
+                <initialPeersList>
+                    <locator>
+                        <udpv4>
+                            <address>10.0.0.158</address>
+                            <port>7777</port>
+                        </udpv4>
+                    </locator>
+                </initialPeersList>
+                <metatrafficUnicastLocatorList>
+                    <locator>
+                        <udpv4>
+                            <address>10.0.0.224</address>
+                            <port>7666</port>
+                        </udpv4>
+                    </locator>
+                </metatrafficUnicastLocatorList>
+            </builtin>
+        </rtps>
+    </participant>
+</profiles>

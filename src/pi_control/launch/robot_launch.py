@@ -15,7 +15,17 @@ def generate_launch_description():
     return LaunchDescription([
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(realsense_launch_path),
-            launch_arguments={'align_depth.enable': 'true'}.items(),
+            launch_arguments={
+                'enable_depth': 'true',
+                'align_depth.enable': 'true',
+
+                'enable_color': 'false',
+                'enable_infra1': 'false',
+                'enable_infra2': 'false',
+                'enable_gyro': 'false',
+                'enable_accel': 'false',
+                'enable_pointcloud': 'false',
+            }.items(),
         ),
 
         Node(
@@ -23,5 +33,5 @@ def generate_launch_description():
             executable='servo_node',
             name='servo_node',
             output='screen'
-        ),
+        )
     ])

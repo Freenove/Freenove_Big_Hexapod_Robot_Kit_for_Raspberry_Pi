@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dds>
+    <profiles>
+        <participant profile_name="client_profile">
+            <rtps>
+                <name>This is hexbot app running on host 'picactus'</name>
+                <builtin>
+                    <initialPeersList>
+                        <locator>
+                            <udpv4>
+                                <address>172.20.0.2</address>
+                                <port>11811</port>
+                            </udpv4>
+                        </locator>
+                    </initialPeersList>
+                </builtin>
+            </rtps>
+        </participant>
+    </profiles>
+</dds>

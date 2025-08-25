@@ -1,13 +1,22 @@
 FROM ubuntu:24.04
 
-ENV DEBIAN_FRONTEND=noninteractive
+# ENV DEBIAN_FRONTEND=noninteractive
 ENV REALSENSE_ROS_TAG 4.57.2
 ENV LIBREALSENSE_TAG v2.57.2
+ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 
 RUN apt-get update && apt-get install -y \
     curl \
     gnupg \
     lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-ros-base \
+    ros-dev-tools \
     git \
     cmake \
     build-essential \
@@ -18,10 +27,22 @@ RUN apt-get update && apt-get install -y \
     libglfw3-dev \
     python3-pip \
     python3-smbus \
+    python3-rosdep \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+WORKDIR /root/ros2_ws/src
+RUN git clone https://github.com/eProsima/Fast-DDS.git
+
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository universe && \
+    apt-get install -y libasio-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /root/ros2_ws
+RUN . /opt/ros/jazzy/setup.sh && \
+    rosdep init && rosdep update && \
+    rosdep install --from-paths src --ignore-src -r -y
 
 WORKDIR /
 RUN git clone --depth 1 --branch ${LIBREALSENSE_TAG} https://github.com/IntelRealSense/librealsense.git
@@ -33,27 +54,21 @@ RUN mkdir build && cd build && \
         -DCMAKE_BUILD_TYPE=Release && \
     make -j$(nproc) && \
     make install
-
 RUN rm -rf /librealsense
 
 RUN apt-get update && apt-get install -y \
-    ros-jazzy-ros-base \
-    ros-dev-tools \
     ros-jazzy-realsense2-camera \
-    ros-jazzy-realsense2-description \
-    ros-jazzy-rmw-cyclonedds-cpp
+    ros-jazzy-realsense2-description
 
 WORKDIR /root/ros2_ws
-COPY ./src /root/ros2_ws/src
+
 
 RUN git clone https://github.com/IntelRealSense/realsense-ros.git -b ${REALSENSE_ROS_TAG} src/realsense-ros
-RUN apt-get install python3-rosdep -y
 
-RUN \
-    . /opt/ros/jazzy/setup.sh && \ 
-    rosdep init && rosdep update && \
+RUN . /opt/ros/jazzy/setup.sh && \ 
+    rosdep update && \
     rosdep install -i --from-path src --rosdistro jazzy -y
 
-RUN . /opt/ros/jazzy/setup.sh && colcon build --symlink-install
+WORKDIR /root/ros2_ws
 
-CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 launch pi_control robot_launch.py"]
+CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && (fastdds discovery -i 0 &) && ros2 launch pi_control robot_launch.py"]
