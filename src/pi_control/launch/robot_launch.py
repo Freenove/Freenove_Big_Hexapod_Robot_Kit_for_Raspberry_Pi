@@ -8,24 +8,23 @@ import os
 def generate_launch_description():
     realsense_launch_path = os.path.join(
         get_package_share_directory('realsense2_camera'),
-        'launch',
-        'rs_launch.py'
+        'launch', 'rs_launch.py'
     )
+
+    realsense_launch_arguments = {
+        'depth_module.depth_profile': '480x270x6',
+        'depth_module.infra_profile': '480x270x6',
+        'rgb_camera.color_profile': '424x240x6',
+        'enable_color': 'true',
+        'align_depth.enable': 'true',
+        'enable_pointcloud': 'true'
+
+    }
 
     return LaunchDescription([
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(realsense_launch_path),
-            launch_arguments={
-                'enable_depth': 'true',
-                'align_depth.enable': 'true',
-
-                'enable_color': 'false',
-                'enable_infra1': 'false',
-                'enable_infra2': 'false',
-                'enable_gyro': 'false',
-                'enable_accel': 'false',
-                'enable_pointcloud': 'false',
-            }.items(),
+            launch_arguments=realsense_launch_arguments.items()
         ),
 
         Node(

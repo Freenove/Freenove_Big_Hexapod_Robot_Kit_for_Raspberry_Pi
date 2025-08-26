@@ -1,9 +1,7 @@
 FROM ubuntu:24.04
 
-# ENV DEBIAN_FRONTEND=noninteractive
 ENV REALSENSE_ROS_TAG 4.57.2
 ENV LIBREALSENSE_TAG v2.57.2
-ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -16,7 +14,10 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/r
 
 RUN apt-get update && apt-get install -y \
     ros-jazzy-ros-base \
+    ros-jazzy-demo-nodes-cpp \
+    ros-jazzy-rmw-zenoh-cpp \
     ros-dev-tools \
+    ros-jazzy-rviz2 \
     git \
     cmake \
     build-essential \
@@ -28,16 +29,10 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-smbus \
     python3-rosdep \
+    netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/ros2_ws/src
-RUN git clone https://github.com/eProsima/Fast-DDS.git
-
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository universe && \
-    apt-get install -y libasio-dev && \
-    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/ros2_ws
 RUN . /opt/ros/jazzy/setup.sh && \

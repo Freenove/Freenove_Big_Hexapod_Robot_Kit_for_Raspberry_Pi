@@ -1,56 +1,45 @@
-networks:
-    ros_network:
-      driver: bridge
-      ipam:
-        config:
-          - subnet: 172.20.0.0/16
-
 services:
-  discovery_server:
-    image: hexbot_pi_ros_img:latest
-    container_name: discovery_server
-    networks:
-      ros_network:
-        ipv4_address: 172.20.0.2
+  zenoh_router:
+    image: eclipse/zenoh:1.5.0-21-gb222944cb
+    container_name: zenoh_router
+    network_mode: host
     volumes:
-      - ./config/server.xml:/root/config/server.xml
-    ports:
-      - "11811:11811/udp"
-    environment:
-      - ROS_DOMAIN_ID=42
-      - FASTRTPS_DEFAULT_PROFILES_FILE=/root/config/server.xml
-    command: ["bash", "-c", "source /opt/ros/jazzy/setup.bash && fastdds discovery -i 0 &"]
+      - ./config/router_config.yaml:/etc/zenoh/router.yaml:ro
+    command: --config /etc/zenoh/router.yaml
 
   pi_control:
     depends_on:
-      - discovery_server
+      - zenoh_router
     build:
       context: .
       dockerfile: ./docker/Dockerfile.pi
+    network_mode: host
     image: hexbot_pi_ros_img:latest
     container_name: pi_control
     privileged: true 
     environment:
-      - ROS_DOMAIN_ID=42
-      - FASTRTPS_DEFAULT_PROFILES_FILE=/root/config/client.xml
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_zenoh_cpp
     working_dir: /root/ros2_ws
     volumes:
       - ./src:/root/ros2_ws/src
-      - ./config/client.xml:/root/config/client.xml
+      - ./config/realsense_params.yaml:/root/ros2_ws/install/pi_control/share/pi_control/config/realsense_params.yaml
     command: ["bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch pi_control robot_launch.py"]
     
   windows_command:
     build:
       context: .
       dockerfile: ./docker/Dockerfile.wsl
+    image: hexbot_wsl_ros_img:latest
     container_name: windows_command
     privileged: true
     environment:
       - DISPLAY
-      - QT_X11_NO_MITSHM=1
-      - ROS_DOMAIN_ID=42
-      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-      - FASTRTPS_DEFAULT_PROFILES_FILE=/root/fastdds_config.xml
+      - QT_X11_NO_MITSHM=1 # For GUI forwarding
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_zenoh_cpp
+      - ZENOH_SESSION_CONFIG_URI=/root/config/client.yaml
     volumes:
+      - ./config/client_config.yaml:/root/config/client.yaml
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./fastdds_config.xml:/root/fastdds_config.xml
+      - ./src:/root/ros2_ws/src

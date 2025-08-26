@@ -7,25 +7,25 @@ from rclpy.node import Node
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSlider
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap
-# from cv_bridge import CvBridge
-# from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+from sensor_msgs.msg import Image
 from robot_interfaces.srv import SetServo
 
 # ROS 2 Node running in a separate thread
 class RosNodeThread(QThread):
-    # image_signal = pyqtSignal(np.ndarray)
+    image_signal = pyqtSignal(np.ndarray)
 
     def __init__(self):
         super().__init__()
         rclpy.init()
         self.node = rclpy.create_node('gui_ros_node')
-        # self.bridge = CvBridge()
-        # self.subscription = self.node.create_subscription(
-        #     Image, '/camera/depth/image_rect_raw', self.image_callback, 10)
+        self.bridge = CvBridge()
+        self.subscription = self.node.create_subscription(
+            Image, '/camera/camera/depth/image_rect_raw', self.image_callback, 10)
     
-    # def image_callback(self, msg):
-    #     cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
-    #     self.image_signal.emit(cv_image)
+    def image_callback(self, msg):
+        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+        self.image_signal.emit(cv_image)
 
     def run(self):
         rclpy.spin(self.node)
@@ -59,25 +59,25 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
 
         # --- Connections ---
-        # self.ros_thread.image_signal.connect(self.update_image)
+        self.ros_thread.image_signal.connect(self.update_image)
         self.slider.valueChanged.connect(self.update_angle_label)
         self.slider.sliderReleased.connect(self.call_set_servo_service)
         
         # --- Start ROS Thread ---
         self.ros_thread.start()
 
-    # @pyqtSlot(np.ndarray)
-    # def update_image(self, cv_img):
-    #     # Normalize and colorize the depth image
-    #     cv_img = cv2.normalize(cv_img, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8U)
-    #     cv_img = cv2.applyColorMap(cv_img, cv2.COLORMAP_JET)
+    @pyqtSlot(np.ndarray)
+    def update_image(self, cv_img):
+        # Normalize and colorize the depth image
+        cv_img = cv2.normalize(cv_img, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8U)
+        cv_img = cv2.applyColorMap(cv_img, cv2.COLORMAP_JET)
 
-    #     # Convert to QPixmap
-    #     h, w, ch = cv_img.shape
-    #     bytes_per_line = ch * w
-    #     convert_to_Qt_format = QImage(cv_img.data, w, h, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
-    #     p = QPixmap.fromImage(convert_to_Qt_format)
-    #     self.video_label.setPixmap(p)
+        # Convert to QPixmap
+        h, w, ch = cv_img.shape
+        bytes_per_line = ch * w
+        convert_to_Qt_format = QImage(cv_img.data, w, h, bytes_per_line, QImage.Format_RGB888).rgbSwapped()
+        p = QPixmap.fromImage(convert_to_Qt_format)
+        self.video_label.setPixmap(p)
 
     def update_angle_label(self, value):
         self.angle_label.setText(f"Angle: {value}°")
