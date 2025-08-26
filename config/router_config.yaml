@@ -1,0 +1,10 @@
+# router_config.yaml
+listen:
+  endpoints:
+    - udp/[::]:7447
+    - tcp/[::]:7447
+
+transport:
+  unicast: 
+    compression: 
+        enabled: true

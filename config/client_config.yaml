@@ -1,0 +1,5 @@
+# client_config.yaml
+connect:
+  endpoints:
+    - udp/10.0.0.224:7447
+    - tcp/10.0.0.224:7447

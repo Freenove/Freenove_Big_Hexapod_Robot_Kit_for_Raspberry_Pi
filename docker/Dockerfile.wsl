@@ -1,19 +1,22 @@
-FROM ros:foxy-ros-base
+FROM ros:jazzy-ros-base
 
-# Install system dependencies, including PyQt5
 RUN apt-get update && apt-get install -y \
+    ros-jazzy-rviz2 \
+    ros-jazzy-demo-nodes-cpp \
     python3-pip \
     python3-opencv \
     python3-pyqt5 \
+    ros-jazzy-cv-bridge \
+    ros-jazzy-rmw-zenoh-cpp \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Middleware (cyclonedds)
-RUN apt-get update && apt-get install -y ros-foxy-rmw-cyclonedds-cpp
-
-# Copy and build the workspace
+WORKDIR /root/ros2_ws/src
 WORKDIR /root/ros2_ws
-COPY ./src /root/ros2_ws/src
-RUN . /opt/ros/foxy/setup.sh && colcon build --symlink-install
+RUN . /opt/ros/jazzy/setup.sh && \
+    rosdep update && \
+    rosdep install --from-paths src --ignore-src -r -y
 
-# Set a default entrypoint
-CMD ["/bin/bash", "-c", "source install/setup.bash && ros2 run windows_command main_window"]
+WORKDIR /root/ros2_ws
+
+CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]
