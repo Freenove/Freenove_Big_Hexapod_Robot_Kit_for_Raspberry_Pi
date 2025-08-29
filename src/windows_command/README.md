@@ -41,6 +41,9 @@ PowerShell
 ```New-VMSwitch -SwitchName "WSLBridge" -NetAdapterName "Wi-Fi" -AllowManagementOS $true```
 Your network may disconnect for a moment. This is normal.
 
+Create a Firewall rule for the Virtual Switch
+```New-NetFirewallRule -DisplayName "Allow All WSL2 Inbound" -Direction Inbound -Action Allow -RemoteAddress Any -LocalAddress $wslIP```
+
 ### Configure WSL to use the bridge:
 
 Navigate to your Windows user profile folder by typing ```%UserProfile%``` in the File Explorer address bar.
@@ -48,13 +51,11 @@ Navigate to your Windows user profile folder by typing ```%UserProfile%``` in th
 Create or edit a file named .wslconfig
 
 Add the following content:
-
+```
 [wsl2]
-
 networkingMode=bridged
-
 vmSwitch=WSLBridge
-
+```
 Restart WSL: In the same PowerShell admin window, run:
 
 PowerShell
