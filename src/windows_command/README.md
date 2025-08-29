@@ -30,31 +30,22 @@ Identify your main network adapter:
 
 PowerShell
 
-```Get-NetAdapter```
-
-Look for your "Wi-Fi" or "Ethernet" adapter.
-
-Create a Virtual Switch: This will bridge your physical network with WSL. Replace "Wi-Fi" with your adapter's name.
-
 PowerShell
-
-```New-VMSwitch -SwitchName "WSLBridge" -NetAdapterName "Wi-Fi" -AllowManagementOS $true```
 Your network may disconnect for a moment. This is normal.
 
 Create a Firewall rule for the Virtual Switch
-```New-NetFirewallRule -DisplayName "Allow All WSL2 Inbound" -Direction Inbound -Action Allow -RemoteAddress Any -LocalAddress $wslIP```
+```New-NetFirewallRule -DisplayName "Allow All WSL2 Inbound" -Direction Inbound -Action Allow -RemoteAddress Any -LocalAddress [PUT YOUR IP HERE]```
 
 ### Configure WSL to use the bridge:
 
 Navigate to your Windows user profile folder by typing ```%UserProfile%``` in the File Explorer address bar.
 
-Create or edit a file named .wslconfig
-
+Create or edit a file named .wslconfig and
 Add the following content:
 ```
 [wsl2]
 networkingMode=bridged
-vmSwitch=WSLBridge
+vmSwitch=Default Switch
 ```
 Restart WSL: In the same PowerShell admin window, run:
 
