@@ -46,6 +46,7 @@ There is a github page where I post about updates on the project. This blog incl
 ### URDF Mesh Files
 <a href="https://drive.google.com/drive/folders/1VZxh9XcH7hnItRFQC2-phcYuDbOMEweY?usp=sharing">Google Drive Assets</a>
 
+The URDF was created using <a href="https://github.com/runtimerobotics/fusion360-urdf-ros2">this exporter</a>
 The meshes for the URDF files are on my google drive as well as the original CAD models from the vendor. 
 
 ### Distributed Setup

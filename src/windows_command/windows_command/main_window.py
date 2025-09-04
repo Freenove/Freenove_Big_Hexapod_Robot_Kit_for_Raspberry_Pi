@@ -21,7 +21,7 @@ class RosNodeThread(QThread):
         self.node = rclpy.create_node('gui_ros_node')
         self.bridge = CvBridge()
         self.subscription = self.node.create_subscription(
-            Image, '/camera/camera/depth/image_rect_raw', self.image_callback, 10)
+            Image, '/camera/camera/depth/image_rect_raw', self.image_callback, 0)
     
     def image_callback(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')

@@ -17,6 +17,6 @@ RUN . /opt/ros/jazzy/setup.sh && \
     rosdep update && \
     rosdep install --from-paths src --ignore-src -r -y
 
-WORKDIR /root/ros2_ws
+# WORKDIR /root/ros2_ws
 
-CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]
+# CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]
