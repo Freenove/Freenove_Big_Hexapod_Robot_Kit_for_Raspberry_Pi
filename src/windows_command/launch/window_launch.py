@@ -1,12 +1,16 @@
 from launch import LaunchDescription
+from launch.actions import ExecuteProcess
 from launch_ros.actions import Node
 
 def generate_launch_description():
+
+    start_gui_node = ExecuteProcess(
+        cmd=['ros2', 'run', 'windows_command', 'hexapod_gui'],
+        output='screen',
+        emulate_tty=True  # Helps with terminal output formatting
+    )
+
+
     return LaunchDescription([
-        Node(
-            package='windows_command',
-            executable='main_window',
-            name='main_window_node',
-            output='screen'
-        ),
+        start_gui_node
     ])
