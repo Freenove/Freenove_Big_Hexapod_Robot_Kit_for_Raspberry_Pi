@@ -1,5 +1,0 @@
-# The servo channel (0-31)
-int32 channel
----
-# The last commanded angle for this channel
-int32 angle

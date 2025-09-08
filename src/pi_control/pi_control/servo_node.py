@@ -1,14 +1,37 @@
-# servo_controller/servo_controller/servo_node.py
-
 import rclpy
 from rclpy.node import Node
 import time
 import sys
+import math
 from pathlib import Path
 
-# Import the PCA9685 driver and the custom service types
 from .pca9685 import PCA9685
-from robot_interfaces.srv import SetServo, GetServo
+from robot_interfaces.srv import SetServo
+from sensor_msgs.msg import JointState
+
+JOINT_NAME_MAP = {
+    0: 'camera_pan_joint',
+    1: 'camera_tilt_joint',
+    9: 'leg3_coxa_joint',
+    8: 'leg3_femur_joint',
+    31: 'leg3_tibia_joint',
+    12: 'leg2_coxa_joint',
+    11: 'leg2_femur_joint',
+    10: 'leg2_tibia_joint',
+    15: 'leg1_coxa_joint',
+    14: 'leg1_femur_joint',
+    13: 'leg1_tibia_joint',
+    16: 'leg6_coxa_joint',
+    17: 'leg6_femur_joint',
+    18: 'leg6_tibia_joint',
+    19: 'leg5_coxa_joint',
+    20: 'leg5_femur_joint',
+    21: 'leg5_tibia_joint',
+    22: 'leg4_coxa_joint',
+    23: 'leg4_femur_joint',
+    27: 'leg4_tibia_joint',
+}
+
 
 def map_value(value, from_low, from_high, to_low, to_high):
     """Map a value from one range to another."""
@@ -39,12 +62,7 @@ class Servo:
         :param channel: Servo channel (0-31)
         :param angle: Angle in degrees (0-180)
         """
-        # The duty cycle for a standard servo is typically 500us (0 deg) to 2500us (180 deg)
-        # The total PWM period at 50Hz is 20000us.
         pulse_us = map_value(angle, 0, 180, 500, 2500)
-        
-        # Convert pulse width in microseconds to a 12-bit duty cycle value (0-4095)
-        # (pulse_us / 20000us) * 4096
         duty_cycle = int((pulse_us / 20000.0) * 4095.0)
 
         if channel < 16:
@@ -56,7 +74,6 @@ class Servo:
         """Relax all servos by turning off PWM."""
         if self.pwm_40 and self.pwm_41:
             for i in range(16):
-                # Setting OFF register to 4096 fully turns off the channel
                 self.pwm_40.set_pwm(i, 0, 4096)
                 self.pwm_41.set_pwm(i, 0, 4096)
             self.logger.info("All servos relaxed.")
@@ -66,26 +83,35 @@ class ServoNode(Node):
         super().__init__('servo_node')
         self.get_logger().info("Servo Control Node has started.")
 
-        # Initialize the Servo controller class
         self.servo_controller = Servo(self.get_logger())
-
-        # Store the last commanded angle for each servo (0-31)
-        # Initialize all to 90 degrees as a safe neutral position
         self.servo_angles = [90] * 32
 
-        # Create the services
+        self.joint_state_publisher = self.create_publisher(JointState, 'joint_states', 10)
+
+        self.publish_timer = self.create_timer(0.05, self.publish_joint_states)
+
         self.set_angle_service = self.create_service(
             SetServo,
             'set_servo_angle',
             self.set_servo_angle_callback)
-            
-        self.get_angle_service = self.create_service(
-            GetServo,
-            'get_servo_angle',
-            self.get_servo_angle_callback)
 
-        # Set all servos to their initial position
         self.initialize_servos()
+
+    def publish_joint_states(self):
+        """Create and publish a JointState message with all current servo angles."""
+        msg = JointState()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.name = []
+        msg.position = []
+
+        for channel, name in JOINT_NAME_MAP.items():
+            msg.name.append(name)
+            
+            angle_deg = self.servo_angles[channel]
+            angle_rad = math.radians(angle_deg - 90.0)
+            msg.position.append(angle_rad)
+
+        self.joint_state_publisher.publish(msg)
 
     def initialize_servos(self):
         """Sets all servos to their initial default angle."""
@@ -118,23 +144,11 @@ class ServoNode(Node):
         response.message = f"Successfully set servo {channel} to {angle} degrees."
         return response
 
-    def get_servo_angle_callback(self, request, response):
-        """Callback for the get_servo_angle service."""
-        channel = request.channel
-        
-        if not (0 <= channel < 32):
-            self.get_logger().error(f"Invalid channel requested: {channel}.")
-            response.angle = -1 # Return -1 for invalid channel
-            return response
-            
-        response.angle = self.servo_angles[channel]
-        return response
 
     def on_shutdown(self):
         """Called upon node shutdown."""
         self.get_logger().info("Shutting down, relaxing all servos...")
         self.servo_controller.relax()
-
 
 def main(args=None):
     rclpy.init(args=args)
@@ -144,7 +158,6 @@ def main(args=None):
     except KeyboardInterrupt:
         pass
     finally:
-        # Cleanly shut down the node and relax servos
         servo_node.on_shutdown()
         servo_node.destroy_node()
         rclpy.shutdown()

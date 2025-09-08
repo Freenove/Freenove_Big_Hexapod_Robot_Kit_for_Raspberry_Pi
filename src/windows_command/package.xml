@@ -8,6 +8,7 @@
 
   <depend>ament_cmake_python</depend>
   <exec_depend>robot_interfaces</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
   <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>
