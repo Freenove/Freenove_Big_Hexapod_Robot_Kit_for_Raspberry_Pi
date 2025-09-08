@@ -23,7 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'main_window = windows_command.main_window:main',
+            'hexapod_gui = windows_command.hexapod_gui:main',
         ],
     },
 )

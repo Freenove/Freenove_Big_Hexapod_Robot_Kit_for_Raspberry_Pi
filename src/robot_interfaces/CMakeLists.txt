@@ -8,7 +8,6 @@ find_package(rosidl_default_generators REQUIRED)
 # Generate services
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/SetServo.srv"
-  "srv/GetServo.srv"
 )
 
 ament_package()
