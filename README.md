@@ -5,15 +5,11 @@ Firstly, I'd like to thank the ppl at Freenove for being awesome and making appl
 
 <img src='assets/images/icon.png' width='50%'/>
 
-## ROS2 Development
+## <a href="https://ogordillo.github.io/ROS2_Conversion_Freenove_Big_Hexapod_Robot_Raspberry_Pi/">Github IO Project Page</as>
 
-### Hardware
-The main hardware components of this project:
-- Freenove FNK0052 kit
-- Raspberry Pi 5
-- Windows 11 laptop with WSL2
-- Intel Realsense Depth Sensor
-- 4S ~14v Battery
+### This is the github page where I post updates on the project. This blog includes pictures, videos and talks about things that worked or didn't worked. 
+
+## ROS2 Development
 
 ### Project Goals
 - Creating a Digital Twin with Fusion360
@@ -23,6 +19,7 @@ The main hardware components of this project:
 - Implement AI models for object avoidance, obstacle climbing.
 - Implement a Gazebo Simulation environment to train AI models.
 - Modify the Robot with additional power resources and sensors.
+
 
 ### Starting Out
 For assembly - the best place to start is by following Freenova's kit Tutorial.pdf. This is available in the branch: <a href="[link](https://github.com/ogordillo/ROS2_Conversion_Freenove_Big_Hexapod_Robot_Raspberry_Pi/tree/original)">original</a> or by following the steps from Freenove project <a href="[link](https://github.com/Freenove/Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi)">Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi</a>
@@ -36,12 +33,12 @@ Nodes/Interfaces are in src/
   - robot_interfaces [Runs on both, defines custom communication]
   - Hexapod_Robot_description [Runs on remote laptop, visualizes/simulates]
   
+### Docker Containers
+- docker
+  - docker.pi
+  - docker.wsl (windows)
 
-### Github Page
-<a href="https://ogordillo.github.io/ROS2_Conversion_Freenove_Big_Hexapod_Robot_Raspberry_Pi/">Github IO Project Page</as>
-
-There is a github page where I post about updates on the project. This blog includes pictures, videos and talks about things that worked or didn't worked. 
-
+Easy build/run with docker-compose
 
 ### URDF Mesh Files
 <a href="https://drive.google.com/drive/folders/1VZxh9XcH7hnItRFQC2-phcYuDbOMEweY?usp=sharing">Google Drive Assets</a>
@@ -52,12 +49,14 @@ The meshes for the URDF files are on my google drive as well as the original CAD
 ### Network Setup
 This project uses Zenoh (Middleware) for ROS2 discovery.
 
-### Docker Containers
-- docker
-  - docker.pi
-  - docker.wsl (windows)
+### Hardware
+The main hardware components of this project:
+- Freenove FNK0052 kit
+- Raspberry Pi 5
+- Windows 11 laptop with WSL2
+- Intel Realsense Depth Sensor
+- 4S ~14v Battery
 
-Easy build/run with docker-compose
 
 ### Contributing
 Contributions are welcome! If you have an idea, find a bug, or want to add a new feature, please open an issue or submit a pull request. 
