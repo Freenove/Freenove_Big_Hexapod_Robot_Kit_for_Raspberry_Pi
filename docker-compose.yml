@@ -39,7 +39,9 @@ services:
       - ROS_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_zenoh_cpp
       - ZENOH_SESSION_CONFIG_URI=/root/config/client.yaml
+    working_dir: /root/ros2_ws
     volumes:
       - ./config/client_config.yaml:/root/config/client.yaml
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./src:/root/ros2_ws/src
+    command: ["bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch windows_command window_launch.py"]

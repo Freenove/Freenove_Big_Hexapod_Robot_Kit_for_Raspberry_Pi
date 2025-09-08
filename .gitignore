@@ -13,6 +13,9 @@
 /install/_local_setup_util.py
 /install/.colcon_install_layout
 
+# Gazebo URDFs
+*.stl
+
 # C/C++ build artifacts
 *.a
 *.so

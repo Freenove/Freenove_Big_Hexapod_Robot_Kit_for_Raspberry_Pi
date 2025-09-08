@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y \
     python3-pyqt5 \
     ros-jazzy-cv-bridge \
     ros-jazzy-rmw-zenoh-cpp \
+    ros-jazzy-xacro \
+    ros-jazzy-joint-state-publisher-gui \
+    ros-jazzy-ros-gz \
     netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
@@ -17,6 +20,6 @@ RUN . /opt/ros/jazzy/setup.sh && \
     rosdep update && \
     rosdep install --from-paths src --ignore-src -r -y
 
-WORKDIR /root/ros2_ws
+# WORKDIR /root/ros2_ws
 
-CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]
+# CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]

@@ -12,7 +12,6 @@ The main hardware components of this project:
 - Freenove FNK0052 kit
 - Raspberry Pi 5
 - Windows 11 laptop with WSL2
-- Nvidia Jetson TX2
 - Intel Realsense Depth Sensor
 - 4S ~14v Battery
 
@@ -21,7 +20,6 @@ This project aims to accomplish the following goals.
 - Implement a ROS distributed systems to control the Hexapod Robot
   - windows_command: A pyqt5 application on a Windows PC (WSL2) to command the robot. 
   - pi_control: A Raspberry Pi 5 receives commands to actuate motors. 
-  - jetson_vision: An nvidia Jetson TX2 streams Realsense depth data and runs AI models onboard .
   - robot_interfaces: all the service, msg, etc. type definitions for communication between nodes.
 - Rewrite the Freenove opensource implementation into ROS compatible packages. 
 - Implement custom motion (joint motion) (frame of resolution motion)
@@ -38,23 +36,26 @@ Once the robot is assembled and operational, there are README.md files in the re
     - README.md
   - windows_command
     - README.md
-  - jetson_vision
-    - README.md
 
 ### Github Page
+<a href="https://ogordillo.github.io/ROS2_Conversion_Freenove_Big_Hexapod_Robot_Raspberry_Pi/">Github IO Project Page</as>
+
 There is a github page where I post about updates on the project. This blog includes pictures, videos and talks about things that worked or didn't worked. 
 
+
+### URDF Mesh Files
+<a href="https://drive.google.com/drive/folders/1VZxh9XcH7hnItRFQC2-phcYuDbOMEweY?usp=sharing">Google Drive Assets</a>
+
+The URDF was created using <a href="https://github.com/runtimerobotics/fusion360-urdf-ros2">this exporter</a>
+The meshes for the URDF files are on my google drive as well as the original CAD models from the vendor. 
+
 ### Distributed Setup
-This project uses CycloneDDS RMW (Middleware) for p2p discovery.
+This project uses Zenoh (Middleware) for ROS2 discovery.
 
 ### Docker Containers
 - docker
   - docker.pi
-  - docker.jetson (jetson)
   - docker.wsl (windows)
-    
-### Note about using EOL ROS2 Foxy
-I am personally working towards a ROS2 Foxy build because my Jetson TX2 is end of life and I really want to use it (for edge computing). This project will use Docker to containerize as much as possible to more easily pivot if needed. 
 
 ### Contributing
 Contributions are welcome! If you have an idea, find a bug, or want to add a new feature, please open an issue or submit a pull request. 
