@@ -6,8 +6,10 @@ import math
 from pathlib import Path
 
 from .pca9685 import PCA9685
+from .adc import ADC
+from .imu import IMU
 from robot_interfaces.srv import SetServo
-from sensor_msgs.msg import JointState
+from sensor_msgs.msg import JointState, BatteryState, Imu
 
 JOINT_NAME_MAP = {
     0: 'camera_pan_joint',
@@ -44,12 +46,16 @@ class Servo:
         try:
             self.pwm_40 = PCA9685(0x40, debug=False)
             self.pwm_41 = PCA9685(0x41, debug=False)
+            
             # Set the cycle frequency of PWM to 50 Hz
             self.pwm_40.set_pwm_freq(50)
             time.sleep(0.01)
             self.pwm_41.set_pwm_freq(50)
             time.sleep(0.01)
             self.logger.info("Successfully initialized PCA9685 drivers at 0x40 and 0x41.")
+            self.adc = ADC()
+            self.imu = IMU()
+            self.logger.info("Successfully initialized ADC monitor 0x84.")
         except Exception as e:
             self.logger.error(f"Failed to initialize PCA9685 drivers: {e}")
             self.pwm_40 = None
@@ -87,8 +93,13 @@ class ServoNode(Node):
         self.servo_angles = [90] * 32
 
         self.joint_state_publisher = self.create_publisher(JointState, 'joint_states', 10)
+        self.battery1_publisher = self.create_publisher(BatteryState, 'battery1_state', 10)
+        self.battery2_publisher = self.create_publisher(BatteryState, 'battery2_state', 10)
+        self.imu_publisher = self.create_publisher(Imu, 'imu/data_raw', 10)
 
         self.publish_timer = self.create_timer(0.05, self.publish_joint_states)
+        self.publish_timer = self.create_timer(1.0, self.publish_battery_states)
+        self.publish_timer = self.create_timer(0.1, self.publish_imu_data)
 
         self.set_angle_service = self.create_service(
             SetServo,
@@ -96,6 +107,58 @@ class ServoNode(Node):
             self.set_servo_angle_callback)
 
         self.initialize_servos()
+
+    def publish_imu_data(self):
+        """Read IMU data and publish Imu messages."""
+        try:
+            self.servo_controller.imu.update_imu_state()
+            
+            accel_data = self.servo_controller.imu.latest_linear_acceleration
+            gyro_data = self.servo_controller.imu.latest_angular_velocity
+            
+            imu_msg = Imu()
+            imu_msg.header.stamp = self.get_clock().now().to_msg()
+            imu_msg.header.frame_id = 'imu_link'
+
+            imu_msg.linear_acceleration.x = accel_data['x']
+            imu_msg.linear_acceleration.y = accel_data['y']
+            imu_msg.linear_acceleration.z = accel_data['z']
+
+            imu_msg.angular_velocity.x = math.radians(gyro_data['x'])
+            imu_msg.angular_velocity.y = math.radians(gyro_data['y'])
+            imu_msg.angular_velocity.z = math.radians(gyro_data['z'])
+
+            imu_msg.orientation.w = self.servo_controller.imu.quaternion_w
+            imu_msg.orientation.x = self.servo_controller.imu.quaternion_x
+            imu_msg.orientation.y = self.servo_controller.imu.quaternion_y
+            imu_msg.orientation.z = self.servo_controller.imu.quaternion_z
+
+            self.imu_publisher.publish(imu_msg)
+        except Exception as e:
+            self.get_logger().error(f"Failed to read or publish IMU data: {e}")
+    
+    def publish_battery_states(self):
+        """Read battery voltages and publish BatteryState messages.
+        Battery percentage is calculated based on voltage range 6.0V (empty) 
+        to 8.4V (full) for a 2S Li-ion battery.
+        """
+        try:
+            battery1_voltage, battery2_voltage = self.servo_controller.adc.read_battery_voltage()
+            
+            battery1_msg = BatteryState()
+            battery1_msg.voltage = battery1_voltage
+            battery1_msg.percentage = min(max((battery1_voltage - 6.0) / (8.4 - 6.0), 0.0), 1.0)
+            battery1_msg.header.stamp = self.get_clock().now().to_msg()
+            self.battery1_publisher.publish(battery1_msg)
+
+            battery2_msg = BatteryState()
+            battery2_msg.voltage = battery2_voltage
+            battery2_msg.percentage = min(max((battery2_voltage - 6.0) / (8.4 - 6.0), 0.0), 1.0)
+            battery2_msg.header.stamp = self.get_clock().now().to_msg()
+            self.battery2_publisher.publish(battery2_msg)
+            self.get_logger().info(f"Battery1 Voltage: {battery1_voltage}V, Battery2 Voltage: {battery2_voltage}V")
+        except Exception as e:
+            self.get_logger().error(f"Failed to read or publish battery states: {e}")
 
     def publish_joint_states(self):
         """Create and publish a JointState message with all current servo angles."""
