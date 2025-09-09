@@ -35,7 +35,7 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal, pyqtSlot, QSize, QTimer
 from PyQt5.QtGui import QImage, QPixmap, QColor, QFont, QPainter, QPen, QBrush, QDoubleValidator
 
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image, JointState
+from sensor_msgs.msg import Image, JointState, BatteryState, Imu
 from robot_interfaces.srv import SetServo
 
 SERVO_CHANNELS = {
@@ -100,12 +100,63 @@ class RosNodeThread(QThread):
             'joint_states',
             self._joint_state_callback,
             10)
+        self.battery1_sub = self.node.create_subscription(
+            BatteryState,
+            '/battery1_state',
+            self._battery1_callback,
+            10)
+        self.battery2_sub = self.node.create_subscription(
+            BatteryState,
+            '/battery2_state',
+            self._battery2_callback,
+            10)
+        self.imu_sub = self.node.create_subscription(
+            Imu,
+            '/imu/data_raw',
+            self._imu_callback,
+            10)
 
         self.node.get_logger().info("Hexapod GUI ROS2 Node is running.")
         rclpy.spin(self.node)
 
         self.node.destroy_node()
         rclpy.shutdown()
+
+    def _imu_callback(self, msg):
+        """Processes incoming IMU messages and updates orientation data."""
+        # Convert quaternion to Euler angles (roll, pitch, yaw)
+        t0 = +2.0 * (msg.orientation.w * msg.orientation.x + msg.orientation.y * msg.orientation.z)
+        t1 = +1.0 - 2.0 * (msg.orientation.x * msg.orientation.x + msg.orientation.y * msg.orientation.y)
+        roll_x = math.atan2(t0, t1)
+
+        t2 = +2.0 * (msg.orientation.w * msg.orientation.y - msg.orientation.z * msg.orientation.x)
+        t2 = +1.0 if t2 > +1.0 else t2
+        t2 = -1.0 if t2 < -1.0 else t2
+        pitch_y = math.asin(t2)
+
+        t3 = +2.0 * (msg.orientation.w * msg.orientation.z + msg.orientation.x * msg.orientation.y)
+        t4 = +1.0 - 2.0 * (msg.orientation.y * msg.orientation.y + msg.orientation.z * msg.orientation.z)
+        yaw_z = math.atan2(t3, t4)
+
+        imu_data = {
+            'x': msg.linear_acceleration.x,
+            'y': msg.linear_acceleration.y,
+            'z': msg.linear_acceleration.z,
+            'roll': math.degrees(roll_x),
+            'pitch': math.degrees(pitch_y),
+            'yaw': math.degrees(yaw_z)
+        }
+        self.telemetry_update_signal.emit(imu_data)
+
+    def _battery1_callback(self, msg):
+        """Processes incoming BatteryState messages and updates battery level."""
+        battery1_level = int(msg.percentage * 100) if msg.percentage >= 0 else 0
+        self.telemetry_update_signal.emit({'battery1': battery1_level})
+
+    def _battery2_callback(self, msg):
+        """Processes incoming BatteryState messages and updates battery level."""
+        battery2_level = int(msg.percentage * 100) if msg.percentage >= 0 else 0
+        self.telemetry_update_signal.emit({'battery2': battery2_level})
 
     def _joint_state_callback(self, msg):
         """Processes incoming JointState messages and converts them to the GUI's format."""
@@ -407,17 +458,17 @@ class IMUDisplayWindow(QWidget):
         layout.addWidget(reset_btn)
         self.value_labels = {}
         grid = QGridLayout()
-        params = ['x', 'y', 'z', 'pitch', 'yaw', 'roll']
+        params = ['x accel', 'y accel', 'z accel', 'pitch', 'yaw', 'roll']
         for i, param in enumerate(params):
             grid.addWidget(QLabel(f"{param.capitalize()}:"), i, 0)
             self.value_labels[param] = QLabel("0.00")
             grid.addWidget(self.value_labels[param], i, 1)
         layout.addLayout(grid)
-        self._update_imu_values({'x':0,'y':0,'z':0,'pitch':0,'yaw':0,'roll':0})
+        self._update_imu_values({'x accel':0,'y accel':0,'z accel':0,'pitch':0,'yaw':0,'roll':0})
 
     def _send_imu_reset_command(self):
         print("COMMAND: Reset IMU to all zeros.")
-        self._update_imu_values({'x':0,'y':0,'z':0,'pitch':0,'yaw':0,'roll':0})
+        self._update_imu_values({'x accel':0,'y accel':0,'z accel':0,'pitch':0,'yaw':0,'roll':0})
 
     def _update_imu_values(self, imu_data):
         for key, value in imu_data.items():
@@ -442,7 +493,8 @@ class MainWindow(QMainWindow):
         self.main_layout.addWidget(self._create_bottom_frame())
         self.ros_thread.telemetry_update_signal.connect(self._update_telemetry_display)
         self._update_connection_status(True)
-        self._update_battery_level(88)
+        # self._update_battery1_level(99)
+        # self._update_battery2_level(99)
 
     def _create_top_frame(self):
         frame = QFrame()
@@ -455,11 +507,16 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.conn_status_label)
         layout.addWidget(self.conn_status_value)
         layout.addStretch()
-        self.batt_level_label = QLabel("Battery:")
-        self.batt_level_value = QLabel("N/A")
-        self.batt_level_value.setFont(font)
-        layout.addWidget(self.batt_level_label)
-        layout.addWidget(self.batt_level_value)
+        self.batt1_level_label = QLabel("Battery1:")
+        self.batt1_level_value = QLabel("N/A")
+        self.batt1_level_value.setFont(font)
+        layout.addWidget(self.batt1_level_label)
+        layout.addWidget(self.batt1_level_value)
+        self.batt2_level_label = QLabel("Battery2:")
+        self.batt2_level_value = QLabel("N/A")
+        self.batt2_level_value.setFont(font)
+        layout.addWidget(self.batt2_level_label)
+        layout.addWidget(self.batt2_level_value)
         return frame
 
     def _create_middle_frame(self):
@@ -472,7 +529,7 @@ class MainWindow(QMainWindow):
         for i in range(1, 7):
             self.leg_value_labels[f'leg{i}'] = self._create_label_value_widget(['coxa', 'femur', 'tibia'])
         self.cam_value_labels = self._create_label_value_widget(['pan', 'tilt', 'Color', 'Depth'])
-        self.imu_value_labels = self._create_label_value_widget(['X', 'Y', 'Z', 'Pitch', 'Yaw', 'Roll'])
+        self.imu_value_labels = self._create_label_value_widget(['x accel', 'y accel', 'z accel', 'pitch', 'yaw', 'roll'])
         self.grid_layout.addWidget(self.leg_value_labels['leg6'], 1, 0, Qt.AlignCenter)
         self.grid_layout.addWidget(self._create_control_button("Leg 6", 6), 1, 1)
         self.grid_layout.addWidget(self.cam_value_labels, 1, 3, Qt.AlignCenter)
@@ -555,6 +612,21 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot(dict)
     def _update_telemetry_display(self, telemetry_data):
+        """Updates connection status, battery levels, and joint angles based on telemetry data."""
+        if 'battery1' in telemetry_data:
+            self._update_battery1_level(telemetry_data['battery1'])
+        if 'battery2' in telemetry_data:
+            self._update_battery2_level(telemetry_data['battery2'])
+
+        if all(k in telemetry_data for k in ['x', 'y', 'z', 'pitch', 'yaw', 'roll']):
+            imu_data = {k.lower(): telemetry_data[k] for k in ['x', 'y', 'z', 'pitch', 'yaw', 'roll']}
+            self.imu_value_labels.value_labels['x accel'].setText(f"{imu_data['x']:.2f}")
+            self.imu_value_labels.value_labels['y accel'].setText(f"{imu_data['y']:.2f}")
+            self.imu_value_labels.value_labels['z accel'].setText(f"{imu_data['z']:.2f}")
+            self.imu_value_labels.value_labels['pitch'].setText(f"{imu_data['pitch']:.2f}°")
+            self.imu_value_labels.value_labels['yaw'].setText(f"{imu_data['yaw']:.2f}°")
+            self.imu_value_labels.value_labels['roll'].setText(f"{imu_data['roll']:.2f}°")
+
         """Receives telemetry data and updates the GUI labels."""
         for channel, angle in telemetry_data.items():
             if channel in REVERSE_SERVO_MAP:
@@ -570,6 +642,7 @@ class MainWindow(QMainWindow):
                 elif component == 'camera':
                     self.cam_value_labels.value_labels[joint].setText(display_text)
 
+
     def _update_connection_status(self, connected):
         if connected:
             self.conn_status_value.setText("Connected")
@@ -578,10 +651,15 @@ class MainWindow(QMainWindow):
             self.conn_status_value.setText("Disconnected")
             self.conn_status_value.setStyleSheet("color: #F44336;")
 
-    def _update_battery_level(self, level):
-        self.batt_level_value.setText(f"{level}%")
+    def _update_battery1_level(self, level):
+        self.batt1_level_value.setText(f"{level}%")
         color = "#4CAF50" if level > 50 else ("#FFC107" if level > 20 else "#F44336")
-        self.batt_level_value.setStyleSheet(f"color: {color};")
+        self.batt1_level_value.setStyleSheet(f"color: {color};")
+    
+    def _update_battery2_level(self, level):
+        self.batt2_level_value.setText(f"{level}%")
+        color = "#4CAF50" if level > 50 else ("#FFC107" if level > 20 else "#F44336")
+        self.batt2_level_value.setStyleSheet(f"color: {color};")
 
     def _open_leg_display_handler(self, leg_number):
         win_id = f"leg_{leg_number}"
