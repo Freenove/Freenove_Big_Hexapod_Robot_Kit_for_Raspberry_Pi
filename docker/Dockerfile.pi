@@ -66,4 +66,8 @@ RUN . /opt/ros/jazzy/setup.sh && \
 
 WORKDIR /root/ros2_ws
 
-CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && (fastdds discovery -i 0 &) && ros2 launch pi_control robot_launch.py"]
+RUN apt-get update && apt-get install -y \
+    ntpdate \
+    && apt-get clean
+
+CMD ["/bin/bash", "-c", "ntpdate pool.ntp.org && source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && (fastdds discovery -i 0 &) && ros2 launch pi_control robot_launch.py"]

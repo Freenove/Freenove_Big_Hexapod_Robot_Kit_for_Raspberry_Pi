@@ -1,15 +1,13 @@
 services:
-  zenoh_router:
-    image: eclipse/zenoh:1.5.0-21-gb222944cb
-    container_name: zenoh_router
-    network_mode: host
-    volumes:
-      - ./config/router_config.yaml:/etc/zenoh/router.yaml:ro
-    command: --config /etc/zenoh/router.yaml
+
+  zenoh-bridge:
+    image: eclipse/zenoh-bridge-ros2dds:latest
+    container_name: zenoh-bridge
+    network_mode: "host"
 
   pi_control:
     depends_on:
-      - zenoh_router
+      - zenoh-bridge
     build:
       context: .
       dockerfile: ./docker/Dockerfile.pi
@@ -24,7 +22,7 @@ services:
     volumes:
       - ./src:/root/ros2_ws/src
       - ./config/realsense_params.yaml:/root/ros2_ws/install/pi_control/share/pi_control/config/realsense_params.yaml
-    command: ["bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch pi_control robot_launch.py"]
+    # command: ["bash", "-c", "ntpdate pool.ntp.org && source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch pi_control robot_launch.py"]
     
   windows_command:
     build:
