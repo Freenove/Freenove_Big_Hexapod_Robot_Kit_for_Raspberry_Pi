@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- <xacro:macro name="hexapod_ros2_control"> -->
+        <ros2_control name="GazeboSimSystem" type="system">
+            <hardware>
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+            </hardware>
+
+            <xacro:macro name="joint_control" params="name">
+                <joint name="${name}">
+                    <command_interface name="position">
+                        <param name="min">-3.14</param>
+                        <param name="max">3.14</param>
+                    </command_interface>
+                    <state_interface name="position">
+                        <param name="initial_value">0.0</param>
+                    </state_interface>
+                    <state_interface name="velocity"/>
+                </joint>
+            </xacro:macro>
+
+            <joint name="leg1_coxa_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg1_femur_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg1_tibia_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg2_coxa_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg2_femur_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg2_tibia_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg3_coxa_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg3_femur_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg3_tibia_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg4_coxa_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg4_femur_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg4_tibia_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg5_coxa_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg5_femur_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg5_tibia_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg6_coxa_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg6_femur_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="leg6_tibia_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="camera_pan_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+    <joint name="camera_tilt_joint">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+    </joint>
+
+
+    </ros2_control>
+    <!-- </xacro:macro> -->
+
+</robot>

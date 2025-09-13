@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = 'Hexapod_Robot_description'
+package_name = 'hexapod_model_description'
 
 setup(
     name=package_name,

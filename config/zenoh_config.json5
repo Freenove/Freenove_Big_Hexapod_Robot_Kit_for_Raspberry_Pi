@@ -1,0 +1,11 @@
+{
+  // Sets the session mode to "client"
+  mode: "client",
+  // Specifies the endpoints of the Zenoh router(s) to connect to
+  connect: {
+    endpoints: [
+      "tcp/10.0.0.118:7447",
+      "udp/10.0.0.118:7447"
+    ]
+  }
+}

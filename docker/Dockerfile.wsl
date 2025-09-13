@@ -1,25 +1,68 @@
 FROM ros:jazzy-ros-base
 
-RUN apt-get update && apt-get install -y \
-    ros-jazzy-rviz2 \
-    ros-jazzy-demo-nodes-cpp \
+ARG DISTRO=jazzy
+ARG GZ_VERSION=harmonic
+
+# Set environment variables for ROS 2
+ENV DEBIAN_FRONTEND=noninteractive
+ENV GZ_VERSION=${GZ_VERSION}
+ENV GZ_SIM_SYSTEM_PLUGIN_PATH="/opt/ros/${DISTRO}/lib"
+
+RUN apt-get update 
+
+RUN apt-get install -y \
+    build-essential \
+    pipx \
+    chrony \
+    git \
     python3-pip \
     python3-opencv \
     python3-pyqt5 \
-    ros-jazzy-cv-bridge \
-    ros-jazzy-rmw-zenoh-cpp \
-    ros-jazzy-xacro \
-    ros-jazzy-joint-state-publisher-gui \
-    ros-jazzy-ros-gz \
+    python3-rosdep \
+    iputils-ping \
+    iproute2  \
+    curl \
+    lsb-release \ 
+    gnupg \
+    ntpdate \
     netcat-openbsd \
+    && apt-get clean
+
+RUN apt-get install -y \
+    ros-${DISTRO}-ros-gz \
+    ros-${DISTRO}-ros-gz-sim \
+    ros-${DISTRO}-cv-bridge \
+    ros-${DISTRO}-rmw-zenoh-cpp \
+    ros-${DISTRO}-ros2-control \
+    ros-${DISTRO}-ros2-controllers \
+    ros-${DISTRO}-gz-ros2-control \ 
+    ros-${DISTRO}-rviz2 \
+    ros-${DISTRO}-plotjuggler \
+    ros-${DISTRO}-plotjuggler-ros \
+    ros-${DISTRO}-joint-state-publisher \
+    ros-${DISTRO}-joint-state-publisher-gui \
+    ros-${DISTRO}-rosbag2-storage-mcap \
+    ros-${DISTRO}-teleop-twist-joy \
+    ros-${DISTRO}-joy \
+    ros-${DISTRO}-pinocchio \
+    ros-${DISTRO}-xacro \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /root/ros2_ws/src
 WORKDIR /root/ros2_ws
-RUN . /opt/ros/jazzy/setup.sh && \
-    rosdep update && \
-    rosdep install --from-paths src --ignore-src -r -y
+# RUN . /opt/ros/jazzy/setup.sh && \
+#     rosdep update && \
+#     rosdep install --from-paths src --ignore-src -r -y
+
+SHELL ["/bin/bash", "-c"]
+
+RUN echo "source /opt/ros/${DISTRO}/setup.bash" >> ~/.bashrc
+RUN echo "source /root/ros2_ws/install/setup.bash" >> ~/.bashrc
+
+RUN sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
+
+COPY ./src ./src
 
 # WORKDIR /root/ros2_ws
 
 # CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]
+# ros2 launch hexapod_model_description gazebo.launch.py

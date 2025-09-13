@@ -16,6 +16,7 @@ Features:
 - Video stream display for color and depth cameras.
 - ROS2 communication (services, topics) handled in a non-blocking background thread.
 - Publishes JointState messages for visualization in RViz2.
+- Publishes Float64MultiArray messages for Gazebo simulation control when 'Sim' mode is enabled.
 """
 
 import sys
@@ -30,13 +31,17 @@ from functools import partial
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QLabel, QPushButton, QFrame,
                              QVBoxLayout, QHBoxLayout, QGridLayout, QSlider, QLineEdit,
                              QListWidget, QAbstractItemView, QSizePolicy,
-                             QSpacerItem)
+                             QSpacerItem, QCheckBox) # Added QCheckBox
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, pyqtSlot, QSize, QTimer
 from PyQt5.QtGui import QImage, QPixmap, QColor, QFont, QPainter, QPen, QBrush, QDoubleValidator
 
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image, JointState, BatteryState, Imu
+from std_msgs.msg import Float64MultiArray # Added for Gazebo
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from builtin_interfaces.msg import Duration
 from robot_interfaces.srv import SetServo
+
 
 SERVO_CHANNELS = {
     'camera': {'pan': 0, 'tilt': 1},
@@ -63,6 +68,16 @@ RVIZ_JOINT_NAMES = {
     'camera': {'pan': 'camera_pan_joint', 'tilt': 'camera_tilt_joint'},
 }
 
+# A canonical, ordered list of all joint names. Used for Gazebo publishing.
+all_rviz_joint_names = [
+    rviz_name
+    for component in ['leg1', 'leg2', 'leg3', 'leg4', 'leg5', 'leg6', 'camera'] # Ensure consistent order
+    for rviz_name in RVIZ_JOINT_NAMES[component].values()
+]
+
+INITIAL_JOINT_STATES = {joint_name: 0.0 for joint_name in all_rviz_joint_names}
+
+
 JOINT_NAME_TO_CHANNEL_MAP = {}
 for component, joints in RVIZ_JOINT_NAMES.items():
     for joint_type, joint_name in joints.items():
@@ -71,7 +86,9 @@ for component, joints in RVIZ_JOINT_NAMES.items():
 
 ROS_TOPICS = {
     'color': '/camera/camera/color/image_raw',
-    'depth': '/camera/camera/depth/image_rect_raw'
+    'depth': '/camera/camera/depth/image_rect_raw',
+    # Added Gazebo command topic
+    'gazebo_cmd': '/hexapod_joint_group_controller/command'
 }
 ROS_SERVICES = {
     'set_servo': '/set_servo_angle'
@@ -89,12 +106,18 @@ class RosNodeThread(QThread):
         self.bridge = CvBridge()
         self.color_sub = None
         self.depth_sub = None
+        # --- MODIFICATION START: Added simulation mode flag ---
+        self.sim_mode = False
+        # --- MODIFICATION END ---
 
     def run(self):
         rclpy.init()
         self.node = rclpy.create_node('hexapod_gui_node')
         self.set_servo_client = self.node.create_client(SetServo, ROS_SERVICES['set_servo'])
-        self.joint_state_pub = self.node.create_publisher(JointState, 'joint_states', 10)
+        self.joint_state_pub = self.node.create_publisher(JointState, '/joint_states', 10)
+        
+        self.gazebo_joint_publisher = self.node.create_publisher(JointTrajectory, '/joint_trajectory_controller/joint_trajectory', 10)
+    
         self.joint_state_sub = self.node.create_subscription(
             JointState,
             'joint_states',
@@ -144,19 +167,20 @@ class RosNodeThread(QThread):
             'z': msg.linear_acceleration.z,
             'roll': math.degrees(roll_x),
             'pitch': math.degrees(pitch_y),
-            'yaw': math.degrees(yaw_z)
+            'yaw': math.degrees(yaw_z),
+            'connection':True
         }
         self.telemetry_update_signal.emit(imu_data)
 
     def _battery1_callback(self, msg):
         """Processes incoming BatteryState messages and updates battery level."""
         battery1_level = int(msg.percentage * 100) if msg.percentage >= 0 else 0
-        self.telemetry_update_signal.emit({'battery1': battery1_level})
+        self.telemetry_update_signal.emit({'battery1': battery1_level, 'connection':True})
 
     def _battery2_callback(self, msg):
         """Processes incoming BatteryState messages and updates battery level."""
         battery2_level = int(msg.percentage * 100) if msg.percentage >= 0 else 0
-        self.telemetry_update_signal.emit({'battery2': battery2_level})
+        self.telemetry_update_signal.emit({'battery2': battery2_level, 'connection':True})
 
     def _joint_state_callback(self, msg):
         """Processes incoming JointState messages and converts them to the GUI's format."""
@@ -201,6 +225,7 @@ class RosNodeThread(QThread):
     def call_set_servo(self, channel, angle):
         if not self.set_servo_client.wait_for_service(timeout_sec=1.0):
             self.node.get_logger().error(f"Service '{ROS_SERVICES['set_servo']}' not available.")
+            self.telemetry_update_signal.emit({'connection':False})
             return
 
         req = SetServo.Request()
@@ -209,13 +234,49 @@ class RosNodeThread(QThread):
         self.set_servo_client.call_async(req)
         self.node.get_logger().info(f"Set servo channel {channel} to {angle} degrees.")
 
-    def publish_joint_state(self, joint_name, position_rad):
-        msg = JointState()
-        msg.header.stamp = self.node.get_clock().now().to_msg()
-        msg.name = [joint_name]
-        msg.position = [position_rad]
-        self.joint_state_pub.publish(msg)
+    # --- MODIFICATION START: Added method to toggle sim mode ---
+    def set_sim_mode(self, enabled):
+        """Sets the simulation mode flag."""
+        self.sim_mode = enabled
+        if self.node:
+            log_msg = "enabled" if enabled else "disabled"
+            self.node.get_logger().info(f"Gazebo simulation publishing is {log_msg}.")
+    # --- MODIFICATION END ---
 
+    def publish_all_joint_states(self, joint_states_dict):
+        """
+        Creates and publishes messages for RViz and Gazebo.
+        In Sim mode, only publishes commands to Gazebo.
+        In Real mode, only publishes joint states for RViz.
+        """
+        if not self.node:
+            return
+
+        # 1. If in simulation mode, publish commands for Gazebo controllers
+        if self.sim_mode:
+            ordered_positions = [joint_states_dict.get(name, 0.0) for name in all_rviz_joint_names]
+            
+            traj_msg = JointTrajectory()
+            traj_msg.joint_names = all_rviz_joint_names # Use the full list of 20 joints
+            
+            point = JointTrajectoryPoint()
+            point.positions = ordered_positions # Use the full list of 20 positions
+            point.time_from_start = Duration(sec=1, nanosec=0) # Reduced time for quicker response
+            
+            traj_msg.points.append(point)
+            
+            self.node.get_logger().info(f'Sending command to move {len(traj_msg.joint_names)} joints.')
+            self.gazebo_joint_publisher.publish(traj_msg)
+
+        
+        # 2. If NOT in simulation mode, publish JointState message for RViz visualization
+        else:
+            rviz_msg = JointState()
+            rviz_msg.header.stamp = self.node.get_clock().now().to_msg()
+            rviz_msg.name = list(joint_states_dict.keys())
+            rviz_msg.position = list(joint_states_dict.values())
+            self.joint_state_pub.publish(rviz_msg)
+            
     def stop(self):
         if self.node and rclpy.ok():
             if rclpy.ok():
@@ -273,6 +334,7 @@ class LegDisplayWindow(QWidget):
         self.ros_node = ros_node_thread
         self.channels = SERVO_CHANNELS[leg_name.lower().replace(" ", "")]
         self.rviz_joints = RVIZ_JOINT_NAMES[leg_name.lower().replace(" ", "")]
+        self._joint_states = INITIAL_JOINT_STATES.copy()
         self.setWindowTitle(f"{leg_name} Control")
         self.setMinimumWidth(400)
         self.main_layout = QVBoxLayout(self)
@@ -322,17 +384,25 @@ class LegDisplayWindow(QWidget):
     
     def _send_joint_command(self, joint_name, channel, angle):
         print(f"COMMAND: Leg={self.leg_name}, Joint={joint_name}, Channel={channel}, Angle={angle}")
-        self.ros_node.call_set_servo(channel, angle)
+        if not self.ros_node.sim_mode:
+            self.ros_node.call_set_servo(channel, angle)
         angle_rad = np.deg2rad(angle - 90)
         rviz_joint_name = self.rviz_joints.get(joint_name)
+        # Update the state
         if rviz_joint_name:
-            self.ros_node.publish_joint_state(rviz_joint_name, angle_rad)
+            self._joint_states[rviz_joint_name] = angle_rad
+        
+        # Publish all joint states for RViz and Gazebo
+        self.ros_node.publish_all_joint_states(self._joint_states)
 
 class CameraDisplayWindow(QWidget):
 
     def __init__(self, ros_node_thread, parent=None):
         super().__init__(parent)
         self.ros_node = ros_node_thread
+        # --- MODIFICATION START: Added joint state tracking for camera ---
+        self._joint_states = INITIAL_JOINT_STATES.copy()
+        # --- MODIFICATION END ---
         self.setWindowTitle("Camera Control & Display")
         self.setMinimumSize(1300, 600)
         self.main_layout = QVBoxLayout(self)
@@ -396,11 +466,17 @@ class CameraDisplayWindow(QWidget):
     
     def _send_camera_command(self, servo_name, channel, angle):
         print(f"COMMAND: Camera={servo_name}, Channel={channel}, Angle={angle}")
-        self.ros_node.call_set_servo(channel, angle)
+        if not self.ros_node.sim_mode:
+            self.ros_node.call_set_servo(channel, angle)
         angle_rad = np.deg2rad(angle - 90)
         rviz_joint_name = RVIZ_JOINT_NAMES['camera'].get(servo_name)
+
+        # --- MODIFICATION START: Bug fix for camera control publishing ---
+        # This now mirrors the leg control logic for consistency
         if rviz_joint_name:
-            self.ros_node.publish_joint_state(rviz_joint_name, angle_rad)
+            self._joint_states[rviz_joint_name] = angle_rad
+            self.ros_node.publish_all_joint_states(self._joint_states)
+        # --- MODIFICATION END ---
 
     def _toggle_video_stream(self, stream_type, checked):
         btn = self.color_toggle_btn if stream_type == 'color' else self.depth_toggle_btn
@@ -434,9 +510,9 @@ class CameraDisplayWindow(QWidget):
             bytes_per_line = ch * w
             convert_to_Qt_format = QImage(cv_img.data, w, h, bytes_per_line, QImage.Format_BGR888)
         else:
-             h, w = cv_img.shape
-             bytes_per_line = w
-             convert_to_Qt_format = QImage(cv_img.data, w, h, bytes_per_line, QImage.Format_Grayscale8)
+            h, w = cv_img.shape
+            bytes_per_line = w
+            convert_to_Qt_format = QImage(cv_img.data, w, h, bytes_per_line, QImage.Format_Grayscale8)
         p = convert_to_Qt_format.scaled(width, height, Qt.KeepAspectRatio)
         return QPixmap.fromImage(p)
     
@@ -492,9 +568,8 @@ class MainWindow(QMainWindow):
         self.main_layout.addWidget(self._create_middle_frame(), stretch=1)
         self.main_layout.addWidget(self._create_bottom_frame())
         self.ros_thread.telemetry_update_signal.connect(self._update_telemetry_display)
-        self._update_connection_status(True)
-        # self._update_battery1_level(99)
-        # self._update_battery2_level(99)
+        self._update_connection_status(False)
+        
 
     def _create_top_frame(self):
         frame = QFrame()
@@ -506,6 +581,14 @@ class MainWindow(QMainWindow):
         self.conn_status_value.setFont(font)
         layout.addWidget(self.conn_status_label)
         layout.addWidget(self.conn_status_value)
+        
+        # --- MODIFICATION START: Added sim checkbox ---
+        self.sim_checkbox = QCheckBox("Sim")
+        self.sim_checkbox.setToolTip("Enable publishing to Gazebo topics")
+        self.sim_checkbox.stateChanged.connect(self._toggle_sim_mode)
+        layout.addWidget(self.sim_checkbox)
+        # --- MODIFICATION END ---
+        
         layout.addStretch()
         self.batt1_level_label = QLabel("Battery1:")
         self.batt1_level_value = QLabel("N/A")
@@ -610,9 +693,20 @@ class MainWindow(QMainWindow):
             button.clicked.connect(self._open_imu_display_handler)
         return button
 
+    # --- MODIFICATION START: Added handler for checkbox ---
+    def _toggle_sim_mode(self, state):
+        """Passes the checkbox state to the ROS thread."""
+        is_checked = (state == Qt.Checked)
+        self.ros_thread.set_sim_mode(is_checked)
+    # --- MODIFICATION END ---
+    
     @pyqtSlot(dict)
     def _update_telemetry_display(self, telemetry_data):
         """Updates connection status, battery levels, and joint angles based on telemetry data."""
+
+        if 'connection' in telemetry_data:
+            self._update_connection_status(telemetry_data['connection'])
+
         if 'battery1' in telemetry_data:
             self._update_battery1_level(telemetry_data['battery1'])
         if 'battery2' in telemetry_data:

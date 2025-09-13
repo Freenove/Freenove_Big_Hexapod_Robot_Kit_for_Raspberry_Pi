@@ -32,14 +32,16 @@ services:
     container_name: windows_command
     privileged: true
     environment:
-      - DISPLAY
-      - QT_X11_NO_MITSHM=1 # For GUI forwarding
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.docker.xauth
       - ROS_DOMAIN_ID=0
       - RMW_IMPLEMENTATION=rmw_zenoh_cpp
+      - RUST_LOG=zenoh=fatal,zenoh_transport=fatal
       - ZENOH_SESSION_CONFIG_URI=/root/config/client.yaml
     working_dir: /root/ros2_ws
     volumes:
       - ./config/client_config.yaml:/root/config/client.yaml
-      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ./src:/root/ros2_ws/src
-    command: ["bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch windows_command window_launch.py"]
+    command: ["bash", "-c", "ntpdate pool.ntp.org && source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch windows_command window_launch.py"]

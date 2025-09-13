@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-<name>Hexapod_Robot_description</name>
+<name>hexapod_model_description</name>
   <version>0.0.0</version>
-<description>The Hexapod_Robot_description package</description>
+<description>The hexapod_model_description package</description>
   <maintainer email="todo@todo.com">author</maintainer>
   <license>TODO: License declaration</license>
 

@@ -1,0 +1,151 @@
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+# SERVO_CHANNELS = {
+#     'camera': {'pan': 0, 'tilt': 1},
+#     'leg1': {'coxa': 15, 'femur': 14, 'tibia': 13},
+#     'leg2': {'coxa': 12, 'femur': 11, 'tibia': 10},
+#     'leg3': {'coxa': 9, 'femur': 8, 'tibia': 31},
+#     'leg4': {'coxa': 22, 'femur': 23, 'tibia': 27},
+#     'leg5': {'coxa': 19, 'femur': 20, 'tibia': 21},
+#     'leg6': {'coxa': 16, 'femur': 17, 'tibia': 18},
+# }
+
+# RVIZ_JOINT_NAMES = {
+#     'leg1': {'coxa': 'leg1_coxa_joint', 'femur': 'leg1_femur_joint', 'tibia': 'leg1_tibia_joint'},
+#     'leg2': {'coxa': 'leg2_coxa_joint', 'femur': 'leg2_femur_joint', 'tibia': 'leg2_tibia_joint'},
+#     'leg3': {'coxa': 'leg3_coxa_joint', 'femur': 'leg3_femur_joint', 'tibia': 'leg3_tibia_joint'},
+#     'leg4': {'coxa': 'leg4_coxa_joint', 'femur': 'leg4_femur_joint', 'tibia': 'leg4_tibia_joint'},
+#     'leg5': {'coxa': 'leg5_coxa_joint', 'femur': 'leg5_femur_joint', 'tibia': 'leg5_tibia_joint'},
+#     'leg6': {'coxa': 'leg6_coxa_joint', 'femur': 'leg6_femur_joint', 'tibia': 'leg6_tibia_joint'},
+#     'camera': {'pan': 'camera_pan_joint', 'tilt': 'camera_tilt_joint'},
+# }
+
+# - ros_topic_name: "/joint_states"
+#   gz_topic_name: "/world/default/model/hexapod_model/joint_state"
+#   ros_type_name: "sensor_msgs/msg/JointState"
+#   gz_type_name: "gz.msgs.Model"
+#   direction: GZ_TO_ROS
+
+# - ros_topic_name: "/leg1_coxa/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg1_coxa_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg1_femur/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg1_femur_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg1_tibia/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg1_tibia_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg2_coxa/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg2_coxa_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg2_femur/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg2_femur_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg2_tibia/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg2_tibia_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg3_coxa/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg3_coxa_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg3_femur/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg3_femur_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg3_tibia/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg3_tibia_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg4_coxa/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg4_coxa_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg4_femur/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg4_femur_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg4_tibia/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg4_tibia_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg5_coxa/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg5_coxa_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg5_femur/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg5_femur_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg5_tibia/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg5_tibia_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg6_coxa/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg6_coxa_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg6_femur/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg6_femur_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/leg6_tibia/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/leg6_tibia_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/camera_pan/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/camera_pan_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ
+
+# - ros_topic_name: "/camera_tilt/cmd_pos"
+#   gz_topic_name: "/model/hexapod_model/joint/camera_tilt_joint/cmd_pos"
+#   ros_type_name: "std_msgs/msg/Float64"
+#   gz_type_name: "gz.msgs.Double"
+#   direction: ROS_TO_GZ

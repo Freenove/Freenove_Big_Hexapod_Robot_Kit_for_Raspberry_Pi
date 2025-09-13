@@ -1,0 +1,44 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+    use_sim_time: true
+    # qos_overrides:
+    #   "/controller_manager/list_controllers":
+    #     service:
+    #       reliability: reliable
+    #       durability: volatile
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - leg1_coxa_joint
+      - leg1_femur_joint
+      - leg1_tibia_joint
+      - leg2_coxa_joint
+      - leg2_femur_joint
+      - leg2_tibia_joint
+      - leg3_coxa_joint
+      - leg3_femur_joint
+      - leg3_tibia_joint
+      - leg4_coxa_joint
+      - leg4_femur_joint
+      - leg4_tibia_joint
+      - leg5_coxa_joint
+      - leg5_femur_joint
+      - leg5_tibia_joint
+      - leg6_coxa_joint
+      - leg6_femur_joint
+      - leg6_tibia_joint
+      - camera_pan_joint
+      - camera_tilt_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity

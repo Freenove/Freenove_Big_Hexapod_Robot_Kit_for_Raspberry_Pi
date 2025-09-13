@@ -31,7 +31,7 @@ Nodes/Interfaces are in src/
   - pi_control [Runs on the pi and controls the servos/sensors]
   - windows_command [Runs on a remote laptop and commands]
   - robot_interfaces [Runs on both, defines custom communication]
-  - Hexapod_Robot_description [Runs on remote laptop, visualizes/simulates]
+  - hexapod_model_description [Runs on remote laptop, visualizes/simulates]
   
 ### Docker Containers
 - docker

@@ -9,20 +9,20 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    share_dir = get_package_share_directory('Hexapod_Robot_description')
+    share_dir = get_package_share_directory('hexapod_model_description')
 
-    xacro_file = os.path.join(share_dir, 'urdf', 'Hexapod_Robot.xacro')
+    xacro_file = os.path.join(share_dir, 'urdf', 'hexapod_model.xacro')
     robot_description_config = xacro.process_file(xacro_file)
     robot_urdf = robot_description_config.toxml()
 
     rviz_config_file = os.path.join(share_dir, 'config', 'display.rviz')
 
-    gui_arg = DeclareLaunchArgument(
-        name='gui',
-        default_value='True'
-    )
+    # gui_arg = DeclareLaunchArgument(
+    #     name='gui',
+    #     default_value='True'
+    # )
 
-    show_gui = LaunchConfiguration('gui')
+    # show_gui = LaunchConfiguration('gui')
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -33,19 +33,19 @@ def generate_launch_description():
         ]
     )
 
-    joint_state_publisher_node = Node(
-        condition=UnlessCondition(show_gui),
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher'
-    )
+    # joint_state_publisher_node = Node(
+    #     condition=UnlessCondition(show_gui),
+    #     package='joint_state_publisher',
+    #     executable='joint_state_publisher',
+    #     name='joint_state_publisher'
+    # )
 
-    joint_state_publisher_gui_node = Node(
-        condition=IfCondition(show_gui),
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui'
-    )
+    # joint_state_publisher_gui_node = Node(
+    #     condition=IfCondition(show_gui),
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     name='joint_state_publisher_gui'
+    # )
 
     rviz_node = Node(
         package='rviz2',
@@ -56,9 +56,9 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        gui_arg,
+        # gui_arg,
         robot_state_publisher_node,
-        joint_state_publisher_node,
-        joint_state_publisher_gui_node,
+        # joint_state_publisher_node,
+        # joint_state_publisher_gui_node,
         rviz_node
     ])

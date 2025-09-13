@@ -1,0 +1,818 @@
+<?xml version="1.0" ?>
+<robot name="hexapod_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0026194670129086545 0.000608332751685821 0.039037168945194906" rpy="0 0 0"/>
+      <mass value="0.13162148571103816"/>
+      <inertia ixx="0.000549" iyy="0.000616" izz="0.000817" ixy="1e-06" iyz="0.0" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg1_coxa_1">
+    <inertial>
+      <origin xyz="0.02068327294528985 0.0005734513933340138 -0.030108799221667246" rpy="0 0 0"/>
+      <mass value="0.055411212779882334"/>
+      <inertia ixx="1.8e-05" iyy="2.7e-05" izz="2.7e-05" ixy="3e-06" iyz="-0.0" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.074015 0.054485 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg1_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.074015 0.054485 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg1_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg1_femur_1">
+    <inertial>
+      <origin xyz="0.03542791988760889 -0.02785834312448089 -2.791239019570013e-07" rpy="0 0 0"/>
+      <mass value="0.01565033360529556"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.093074 0.0848 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg1_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.093074 0.0848 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg1_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg1_tibia_1">
+    <inertial>
+      <origin xyz="0.015081196994244234 0.02146871541494612 -0.01725662928572464" rpy="0 0 0"/>
+      <mass value="0.03236606751747676"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="5e-06" ixy="-1e-06" iyz="-3e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.166798 0.136421 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg1_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.166798 0.136421 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg1_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg2_coxa_1">
+    <inertial>
+      <origin xyz="0.012333292372850486 -0.016614177581995307 -0.030108799221672464" rpy="0 0 0"/>
+      <mass value="0.05541121277989177"/>
+      <inertia ixx="2.6e-05" iyy="1.8e-05" izz="2.7e-05" ixy="3e-06" iyz="1e-06" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.001985 0.084485 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg2_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.001985 0.084485 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg2_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg2_femur_1">
+    <inertial>
+      <origin xyz="-0.0025002890984096374 -0.04419164973443521 -0.008492801491495987" rpy="0 0 0"/>
+      <mass value="0.015650333605295393"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.015885 0.117485 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg2_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.015885 0.117485 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg2_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg2_tibia_1">
+    <inertial>
+      <origin xyz="0.02623657202447643 0.0032175056252809753 -0.016954107546123608" rpy="0 0 0"/>
+      <mass value="0.032366066740945575"/>
+      <inertia ixx="2.1e-05" iyy="2.3e-05" izz="6e-06" ixy="1e-06" iyz="3e-06" ixz="-3e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.015885 0.205868 -0.014528" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg2_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.015885 0.205868 -0.014528" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg2_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg3_coxa_1">
+    <inertial>
+      <origin xyz="-0.004799395854957936 -0.020127553637971148 -0.030108799221667412" rpy="0 0 0"/>
+      <mass value="0.055411212779882306"/>
+      <inertia ixx="2.5e-05" iyy="2e-05" izz="2.7e-05" ixy="-5e-06" iyz="1e-06" ixz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.077985 0.054485 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg3_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.077985 0.054485 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg3_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg3_femur_1">
+    <inertial>
+      <origin xyz="-0.036078469514005895 -0.027010579982379296 -2.791239018945513e-07" rpy="0 0 0"/>
+      <mass value="0.01565033360529561"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.1122 0.065049 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg3_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.1122 0.065049 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg3_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg3_tibia_1">
+    <inertial>
+      <origin xyz="0.016834697294396933 -0.02012435473824882 -0.017256629587411518" rpy="0 0 0"/>
+      <mass value="0.0323660675174863"/>
+      <inertia ixx="2.2e-05" iyy="2.2e-05" izz="5e-06" ixy="1e-06" iyz="2e-06" ixz="-2e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.181144 0.1229 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg3_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.181144 0.1229 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg3_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg4_coxa_1">
+    <inertial>
+      <origin xyz="-0.004799396098101663 0.020126991093514547 -0.030108799033593925" rpy="0 0 0"/>
+      <mass value="0.05541121277988202"/>
+      <inertia ixx="2.5e-05" iyy="2e-05" izz="2.7e-05" ixy="5e-06" iyz="-1e-06" ixz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.077985 -0.055515 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg4_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.077985 -0.055515 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg4_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg4_femur_1">
+    <inertial>
+      <origin xyz="-0.03607846956725638 0.02701001794357151 -2.78240923724804e-07" rpy="0 0 0"/>
+      <mass value="0.015650333605295472"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.1122 -0.066079 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg4_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.1122 -0.066079 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg4_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg4_tibia_1">
+    <inertial>
+      <origin xyz="0.016834697878780613 0.020123792830575096 -0.01725662819463489" rpy="0 0 0"/>
+      <mass value="0.03236606751747625"/>
+      <inertia ixx="2.2e-05" iyy="2.2e-05" izz="5e-06" ixy="-1e-06" iyz="-2e-06" ixz="-2e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.181144 -0.12393 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg4_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.181144 -0.12393 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg4_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg5_coxa_1">
+    <inertial>
+      <origin xyz="0.01233329237284984 0.01661361515093593 -0.030108799033599393" rpy="0 0 0"/>
+      <mass value="0.05541121277989181"/>
+      <inertia ixx="2.6e-05" iyy="1.8e-05" izz="2.7e-05" ixy="-3e-06" iyz="-1e-06" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.001985 -0.085515 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg5_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.001985 -0.085515 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg5_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg5_femur_1">
+    <inertial>
+      <origin xyz="-0.0025002885936068545 0.04499443236815963 0.0006894733466853292" rpy="0 0 0"/>
+      <mass value="0.01565033360529512"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.015885 -0.118515 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg5_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.015885 -0.118515 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg5_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg5_tibia_1">
+    <inertial>
+      <origin xyz="0.025979562164044796 0.0003013075463791648 -0.01710149941871419" rpy="0 0 0"/>
+      <mass value="0.050689058485657794"/>
+      <inertia ixx="3.2e-05" iyy="3.6e-05" izz="8e-06" ixy="0.0" iyz="1e-06" ixz="-4e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.015885 -0.208504 -0.032892" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg5_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0.015885 -0.208504 -0.032892" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg5_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg6_coxa_1">
+    <inertial>
+      <origin xyz="0.020681013163282427 -0.0005709727443522841 -0.030124143674050183" rpy="0 0 0"/>
+      <mass value="0.055463292779881934"/>
+      <inertia ixx="1.8e-05" iyy="2.7e-05" izz="2.7e-05" ixy="-3e-06" iyz="0.0" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.074015 -0.055515 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg6_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.074015 -0.055515 -0.072913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg6_coxa_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg6_femur_1">
+    <inertial>
+      <origin xyz="0.03542792058687837 0.027858780243763148 -2.7824092389827637e-07" rpy="0 0 0"/>
+      <mass value="0.01565033360529567"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.093074 -0.085829 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg6_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.093074 -0.085829 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg6_femur_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leg6_tibia_1">
+    <inertial>
+      <origin xyz="0.014756145284398031 -0.021008018029169837 -0.017046651899120715" rpy="0 0 0"/>
+      <mass value="0.03380726629281183"/>
+      <inertia ixx="2.3e-05" iyy="2.2e-05" izz="6e-06" ixy="1e-06" iyz="2e-06" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.166798 -0.137451 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg6_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.166798 -0.137451 -0.031513" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/leg6_tibia_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="neck_1">
+    <inertial>
+      <origin xyz="0.0052066156030023125 -0.0023301264209638663 0.026929240066127555" rpy="0 0 0"/>
+      <mass value="0.02048623594912533"/>
+      <inertia ixx="5e-06" iyy="5e-06" izz="2e-06" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.081015 -0.000515 -0.079313" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/neck_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.081015 -0.000515 -0.079313" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/neck_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="face_1">
+    <inertial>
+      <origin xyz="0.024465116896336292 0.013965053641047892 0.0022496960568595264" rpy="0 0 0"/>
+      <mass value="0.03199588099403523"/>
+      <inertia ixx="1.6e-05" iyy="1.1e-05" izz="1.2e-05" ixy="-3e-06" iyz="-0.0" ixz="-1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.091415 0.019185 -0.120913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/face_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.091415 0.019185 -0.120913" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find hexapod_model_description)/meshes/face_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="leg1_coxa_joint" type="revolute">
+    <origin xyz="0.074015 -0.054485 0.072913" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leg1_coxa_1"/>
+    <axis xyz="-0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg1_femur_joint" type="revolute">
+    <origin xyz="0.019059 -0.030315 -0.0414" rpy="0 0 0"/>
+    <parent link="leg1_coxa_1"/>
+    <child link="leg1_femur_1"/>
+    <axis xyz="-0.573576 -0.819152 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg1_tibia_joint" type="revolute">
+    <origin xyz="0.073724 -0.051621 0.0" rpy="0 0 0"/>
+    <parent link="leg1_femur_1"/>
+    <child link="leg1_tibia_1"/>
+    <axis xyz="-0.573576 -0.819152 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg2_coxa_joint" type="revolute">
+    <origin xyz="-0.001985 -0.084485 0.072913" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leg2_coxa_1"/>
+    <axis xyz="-0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg2_femur_joint" type="revolute">
+    <origin xyz="-0.0139 -0.033 -0.0414" rpy="0 0 0"/>
+    <parent link="leg2_coxa_1"/>
+    <child link="leg2_femur_1"/>
+    <axis xyz="-1.0 0.0 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg2_tibia_joint" type="revolute">
+    <origin xyz="0.0 -0.088383 -0.016985" rpy="0 0 0"/>
+    <parent link="leg2_femur_1"/>
+    <child link="leg2_tibia_1"/>
+    <axis xyz="-1.0 0.0 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg3_coxa_joint" type="revolute">
+    <origin xyz="-0.077985 -0.054485 0.072913" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leg3_coxa_1"/>
+    <axis xyz="-0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg3_femur_joint" type="revolute">
+    <origin xyz="-0.034215 -0.010564 -0.0414" rpy="0 0 0"/>
+    <parent link="leg3_coxa_1"/>
+    <child link="leg3_femur_1"/>
+    <axis xyz="-0.642788 0.766044 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg3_tibia_joint" type="revolute">
+    <origin xyz="-0.068944 -0.057851 0.0" rpy="0 0 0"/>
+    <parent link="leg3_femur_1"/>
+    <child link="leg3_tibia_1"/>
+    <axis xyz="0.642788 -0.766044 0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg4_coxa_joint" type="revolute">
+    <origin xyz="-0.077985 0.055515 0.072913" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leg4_coxa_1"/>
+    <axis xyz="-0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg4_femur_joint" type="revolute">
+    <origin xyz="-0.034215 0.010564 -0.0414" rpy="0 0 0"/>
+    <parent link="leg4_coxa_1"/>
+    <child link="leg4_femur_1"/>
+    <axis xyz="-0.642788 -0.766044 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg4_tibia_joint" type="revolute">
+    <origin xyz="-0.068944 0.057851 0.0" rpy="0 0 0"/>
+    <parent link="leg4_femur_1"/>
+    <child link="leg4_tibia_1"/>
+    <axis xyz="0.642788 0.766044 0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg5_coxa_joint" type="revolute">
+    <origin xyz="-0.001985 0.085515 0.072913" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leg5_coxa_1"/>
+    <axis xyz="0.0 -0.0 -1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg5_femur_joint" type="revolute">
+    <origin xyz="-0.0139 0.033 -0.0414" rpy="0 0 0"/>
+    <parent link="leg5_coxa_1"/>
+    <child link="leg5_femur_1"/>
+    <axis xyz="-1.0 0.0 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg5_tibia_joint" type="revolute">
+    <origin xyz="0.0 0.089989 0.001379" rpy="0 0 0"/>
+    <parent link="leg5_femur_1"/>
+    <child link="leg5_tibia_1"/>
+    <axis xyz="1.0 -0.0 0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg6_coxa_joint" type="revolute">
+    <origin xyz="0.074015 0.055515 0.072913" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leg6_coxa_1"/>
+    <axis xyz="-0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg6_femur_joint" type="revolute">
+    <origin xyz="0.019059 0.030314 -0.0414" rpy="0 0 0"/>
+    <parent link="leg6_coxa_1"/>
+    <child link="leg6_femur_1"/>
+    <axis xyz="-0.573576 0.819152 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="leg6_tibia_joint" type="revolute">
+    <origin xyz="0.073724 0.051622 0.0" rpy="0 0 0"/>
+    <parent link="leg6_femur_1"/>
+    <child link="leg6_tibia_1"/>
+    <axis xyz="0.573576 -0.819152 0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="camera_pan_joint" type="revolute">
+    <origin xyz="0.081015 0.000515 0.079313" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="neck_1"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <joint name="camera_tilt_joint" type="revolute">
+    <origin xyz="0.0104 -0.0197 0.0416" rpy="0 0 0"/>
+    <parent link="neck_1"/>
+    <child link="face_1"/>
+    <axis xyz="-0.0 -1.0 -0.0"/>
+    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+  </joint>
+
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="leg1_coxa_joint">
+    <command_interface name="position">
+        <param name="min">-1.57</param>
+        <param name="max">1.57</param>
+    </command_interface>
+    <state_interface name="position">
+        <param name="initial_value">0.0</param>
+    </state_interface>
+    <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg1_femur_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg1_tibia_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg2_coxa_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg2_femur_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg2_tibia_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg3_coxa_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg3_femur_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg3_tibia_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg4_coxa_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg4_femur_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg4_tibia_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg5_coxa_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg5_femur_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg5_tibia_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg6_coxa_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg6_femur_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="leg6_tibia_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="camera_pan_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="camera_tilt_joint">
+      <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+      </command_interface>
+      <state_interface name="position">
+          <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+  <gazebo>
+      <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+          <parameters>$(find hexapod_model_description)/config/controllers.yaml
+          <controller_manager_prefix_node_name>controller_manager</controller_manager_prefix_node_name>
+          </parameters>
+      </plugin>
+  </gazebo>
+</robot>
