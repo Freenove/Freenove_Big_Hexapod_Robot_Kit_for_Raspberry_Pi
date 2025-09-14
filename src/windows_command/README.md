@@ -1,6 +1,6 @@
 ## Setting up Docker
 
-download docker desktop on Windows machine
+Download docker desktop on Windows machine
 
 ## Setting up WSL
 
@@ -19,22 +19,6 @@ Execute the installation command:
 · You may need to confirm the installation by pressing 'y' when prompted.
 
 For coding, I use VSCode with the WSL extension.
-
-## Setting up Network Bridge (required for WSL)
-
-To ensure seamless ROS 2 discovery, we'll give your WSL2 instance its own IP address on your local network, making it a true peer to the Jetson and Pi.
-
-Open PowerShell as Administrator on Windows.
-
-Identify your main network adapter:
-
-PowerShell
-
-PowerShell
-Your network may disconnect for a moment. This is normal.
-
-Create a Firewall rule for the Virtual Switch
-```New-NetFirewallRule -DisplayName "Allow All WSL2 Inbound" -Direction Inbound -Action Allow -RemoteAddress Any -LocalAddress [PUT YOUR IP HERE]```
 
 ### Configure WSL to use the bridge:
 
@@ -55,7 +39,7 @@ PowerShell
 
 Now, start your WSL Ubuntu terminal. It will reboot and connect to the new bridge.
 
-```echo "export DISPLAY=0" >> ~/.bashrc```
+```echo "export DISPLAY=:0" >> ~/.bashrc```
 
 ```echo "export LIBGL_ALWAYS_INDIRECT=0" >> ~/.bashrc```
 
