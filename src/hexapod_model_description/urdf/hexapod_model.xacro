@@ -447,7 +447,7 @@
     <parent link="base_link"/>
     <child link="leg1_coxa_1"/>
     <axis xyz="-0.0 0.0 1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg1_femur_joint" type="revolute">
@@ -455,7 +455,7 @@
     <parent link="leg1_coxa_1"/>
     <child link="leg1_femur_1"/>
     <axis xyz="-0.573576 -0.819152 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg1_tibia_joint" type="revolute">
@@ -463,7 +463,7 @@
     <parent link="leg1_femur_1"/>
     <child link="leg1_tibia_1"/>
     <axis xyz="-0.573576 -0.819152 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg2_coxa_joint" type="revolute">
@@ -471,7 +471,7 @@
     <parent link="base_link"/>
     <child link="leg2_coxa_1"/>
     <axis xyz="-0.0 0.0 1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg2_femur_joint" type="revolute">
@@ -479,7 +479,7 @@
     <parent link="leg2_coxa_1"/>
     <child link="leg2_femur_1"/>
     <axis xyz="-1.0 0.0 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg2_tibia_joint" type="revolute">
@@ -487,7 +487,7 @@
     <parent link="leg2_femur_1"/>
     <child link="leg2_tibia_1"/>
     <axis xyz="-1.0 0.0 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg3_coxa_joint" type="revolute">
@@ -495,7 +495,7 @@
     <parent link="base_link"/>
     <child link="leg3_coxa_1"/>
     <axis xyz="-0.0 0.0 1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg3_femur_joint" type="revolute">
@@ -503,7 +503,7 @@
     <parent link="leg3_coxa_1"/>
     <child link="leg3_femur_1"/>
     <axis xyz="-0.642788 0.766044 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg3_tibia_joint" type="revolute">
@@ -511,7 +511,7 @@
     <parent link="leg3_femur_1"/>
     <child link="leg3_tibia_1"/>
     <axis xyz="0.642788 -0.766044 0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg4_coxa_joint" type="revolute">
@@ -519,7 +519,7 @@
     <parent link="base_link"/>
     <child link="leg4_coxa_1"/>
     <axis xyz="-0.0 0.0 1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg4_femur_joint" type="revolute">
@@ -527,7 +527,7 @@
     <parent link="leg4_coxa_1"/>
     <child link="leg4_femur_1"/>
     <axis xyz="-0.642788 -0.766044 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg4_tibia_joint" type="revolute">
@@ -535,7 +535,7 @@
     <parent link="leg4_femur_1"/>
     <child link="leg4_tibia_1"/>
     <axis xyz="0.642788 0.766044 0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg5_coxa_joint" type="revolute">
@@ -543,7 +543,7 @@
     <parent link="base_link"/>
     <child link="leg5_coxa_1"/>
     <axis xyz="0.0 -0.0 -1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg5_femur_joint" type="revolute">
@@ -551,7 +551,7 @@
     <parent link="leg5_coxa_1"/>
     <child link="leg5_femur_1"/>
     <axis xyz="-1.0 0.0 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg5_tibia_joint" type="revolute">
@@ -559,7 +559,7 @@
     <parent link="leg5_femur_1"/>
     <child link="leg5_tibia_1"/>
     <axis xyz="1.0 -0.0 0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg6_coxa_joint" type="revolute">
@@ -567,7 +567,7 @@
     <parent link="base_link"/>
     <child link="leg6_coxa_1"/>
     <axis xyz="-0.0 0.0 1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg6_femur_joint" type="revolute">
@@ -575,7 +575,7 @@
     <parent link="leg6_coxa_1"/>
     <child link="leg6_femur_1"/>
     <axis xyz="-0.573576 0.819152 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="leg6_tibia_joint" type="revolute">
@@ -583,7 +583,7 @@
     <parent link="leg6_femur_1"/>
     <child link="leg6_tibia_1"/>
     <axis xyz="0.573576 -0.819152 0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="camera_pan_joint" type="revolute">
@@ -591,7 +591,7 @@
     <parent link="base_link"/>
     <child link="neck_1"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <joint name="camera_tilt_joint" type="revolute">
@@ -599,7 +599,7 @@
     <parent link="neck_1"/>
     <child link="face_1"/>
     <axis xyz="-0.0 -1.0 -0.0"/>
-    <limit lower="0.0" upper="3.14159" effort="100" velocity="1.0" />
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0" />
   </joint>
 
   <ros2_control name="GazeboSimSystem" type="system">
