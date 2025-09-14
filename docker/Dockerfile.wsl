@@ -3,7 +3,8 @@ FROM ros:jazzy-ros-base
 ARG DISTRO=jazzy
 ARG GZ_VERSION=harmonic
 
-# Set environment variables for ROS 2
+SHELL ["/bin/bash", "-c"]
+
 ENV DEBIAN_FRONTEND=noninteractive
 ENV GZ_VERSION=${GZ_VERSION}
 ENV GZ_SIM_SYSTEM_PLUGIN_PATH="/opt/ros/${DISTRO}/lib"
@@ -49,20 +50,11 @@ RUN apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/ros2_ws
-# RUN . /opt/ros/jazzy/setup.sh && \
-#     rosdep update && \
-#     rosdep install --from-paths src --ignore-src -r -y
-
-SHELL ["/bin/bash", "-c"]
 
 RUN echo "source /opt/ros/${DISTRO}/setup.bash" >> ~/.bashrc
 RUN echo "source /root/ros2_ws/install/setup.bash" >> ~/.bashrc
+RUN echo "alias gazebo_hexapod='ros2 launch hexapod_model_description gazebo.launch.py'" >> ~/.bashrc
 
 RUN sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
 
 COPY ./src ./src
-
-# WORKDIR /root/ros2_ws
-
-# CMD ["/bin/bash", "-c", "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash &&  ros2 launch windows_command window_launch.py"]
-# ros2 launch hexapod_model_description gazebo.launch.py
