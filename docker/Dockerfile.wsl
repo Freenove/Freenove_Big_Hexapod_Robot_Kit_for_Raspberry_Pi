@@ -54,6 +54,8 @@ WORKDIR /root/ros2_ws
 RUN echo "source /opt/ros/${DISTRO}/setup.bash" >> ~/.bashrc
 RUN echo "source /root/ros2_ws/install/setup.bash" >> ~/.bashrc
 RUN echo "alias gazebo_hexapod='ros2 launch hexapod_model_description gazebo.launch.py'" >> ~/.bashrc
+RUN echo "alias rviz_hexapod='ros2 launch hexapod_model_description display.launch.py'" >> ~/.bashrc
+
 
 RUN sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
 
