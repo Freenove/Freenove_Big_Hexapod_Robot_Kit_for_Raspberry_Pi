@@ -55,7 +55,7 @@
   - z: `-20` to `20`
 
 ## 10. Servo Power-off Control
-- **Command Format**: `CMD_SERVO\n`
+- **Command Format**: `CMD_RELAX\n`
 - **Parameter Description**: Each time the command is received, it toggles the servo enable/disable state. This command is not recommended; please use `CMD_SERVOPOWER` instead.
 
 ## 11. Power Voltage Query
@@ -63,7 +63,7 @@
 - **Return Format**: `CMD_POWER#<load battery voltage>#<Raspberry Pi battery voltage>\n`
 
 ## 12. Camera View Movement
-- **Command Format**: `CMD_SERVOPOWER#<x>#<y>\n`
+- **Command Format**: `CMD_CAMERA#<x>#<y>\n`
 - **Parameter Description**: 
   - x: Left-right direction, range `-90` to `90`
   - y: Up-down direction, range `-90` to `90`
