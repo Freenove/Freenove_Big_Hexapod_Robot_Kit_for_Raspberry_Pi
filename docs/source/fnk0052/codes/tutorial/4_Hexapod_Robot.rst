@@ -594,50 +594,6 @@ When the Client is opened successfully, you need to turn on Raspberry Pi and ope
     
     :red:`when Raspberry Pi is shut down, server will be closed. You need open server again the next time.`
 
-Run client on Raspberry Pi(Linux) system
-================================================================
-
-Install opencv library
-----------------------------------------------------------------
-
-Enter the following three commands one by one
-
-.. code-block:: console
-
-    $ sudo apt-get install -y libopencv-dev python3-opencv
-
-    $ sudo pip3 install opencv-contrib-python
-
-    $ sudo apt-get install -y libatlas-base-dev libjasper-dev
-
-Open client
-----------------------------------------------------------------
-
-Enter the following commands at the terminal.
-
-1.	Use the cd command to go to the directory where Main.py is located.
-
-.. code-block:: console
-
-    $ cd ~/Freenove_Big_Hexapod_Robot_Kit_for_Raspberry_Pi/Code/Client
-
-2.	Run Main.py:
-
-.. code-block:: console
-
-    $ sudo python Main.py
-
-The interface is shown below:
-
-.. image:: ../_static/imgs/4_Hexapod_Robot/Chapter4_34.png
-    :align: center
-
-When the Client is opened successfully, you need to turn on Raspberry Pi and open the server. Enter Raspberry Pi’s IP address in the white IP editor and click “Connect” to connect the robot with RPi. After connecting successfully, you need to calibrate the robot's six legs before control it to move.
-
-.. note::
-    
-    :red:`when Raspberry Pi is shut down, server will be closed. You need open server again the next time.`
-
 Calibration
 ================================================================
 
