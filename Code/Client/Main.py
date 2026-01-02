@@ -742,7 +742,7 @@ class faceWindow(QMainWindow,Ui_Face):
 
                     second=int(time.time() - self.timeout)
                     if second > 1:
-                        self.saveFcaePhoto()
+                        self.saveFacePhoto()
                         self.timeout=time.time()
                     else:
                         self.Button_Read_Face.setText("Reading "+str(1-second)+"S   "+str(self.photoCount)+"/30")
@@ -754,7 +754,7 @@ class faceWindow(QMainWindow,Ui_Face):
         except Exception as e:
             print(e)
 
-    def saveFcaePhoto(self):
+    def saveFacePhoto(self):
         cv2.cvtColor(self.face_image, cv2.COLOR_BGR2RGB, self.face_image)
         cv2.imwrite('Face/'+str(len(self.client.face.name))+'.jpg', self.face_image)
         self.client.face.name.append([str(len(self.client.face.name)),str(self.name)])
