@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def check_and_install(package):
     try:
@@ -12,6 +13,57 @@ def check_and_install(package):
         except subprocess.CalledProcessError:
             print(f"Failed to install {package}.")
             return False
+        
+def run_command(command):
+    """Execute the specified shell command"""
+    print(f"Running: {command}")
+    result = os.system(command)
+    if result != 0:
+        raise Exception(f"Command failed: {command}")
+def clone_with_retry(repo_url, max_retries=3, recurse_submodules=False):
+    """Clone repository with retry mechanism"""
+    for attempt in range(max_retries):
+        try:
+            print(f"Attempting to clone repository (attempt {attempt + 1}/{max_retries})")
+            if recurse_submodules:
+                run_command(f"git clone --recurse-submodules {repo_url}")
+            else:
+                run_command(f"git clone {repo_url}")
+            print("Repository cloned successfully")
+            return True
+        except Exception as e:
+            print(f"Clone attempt {attempt + 1} failed: {e}")
+            if attempt < max_retries - 1:
+                print("Retrying...")
+            else:
+                print("All retry attempts failed")
+                return False
+    return False
+def install_rpi_ws281x():
+    try:
+        username = os.getlogin()
+        home_dir = os.path.expanduser(f"~{username}")
+    except Exception:
+        home_dir = "/home/pi"
+        print("Warning: Unable to get current username, using default path /home/pi")
+    os.chdir(home_dir)
+    folder_path = os.path.join(home_dir, "rpi-ws281x-python")
+    if os.path.exists(folder_path):
+        print("Repository directory already exists, skipping clone step")
+    else:
+        success = clone_with_retry("https://github.com/rpi-ws281x/rpi-ws281x-python.git", recurse_submodules=True)
+        if not success:
+            raise Exception("Failed to clone repository after multiple attempts")
+    run_command(f"sudo chmod 777 * -R -f")
+
+    target_dir = os.path.join(home_dir, "rpi-ws281x-python", "library")
+    if not os.path.exists(target_dir):
+        raise Exception(f"No 'library' directory found in {os.path.join(home_dir, 'rpi-ws281x-python', 'library')}")
+    os.chdir(target_dir)
+    print(f"Changed to directory: {target_dir}")
+    run_command("sudo python3 setup.py install")
+    os.chdir(home_dir)  
+    return True
 
 def apt_install(package):
     install_command = f"sudo apt-get install -y {package}"
@@ -144,7 +196,7 @@ def main():
         "libqt5gui5 python3-dev python3-pyqt5": False
     }
     subprocess.run("sudo apt-get update", shell=True, check=True)
-    install_status["rpi-ws281x-python (custom install)"] = custom_install("cd ./Libs/rpi-ws281x-python/library && sudo python3 setup.py install")
+    install_status["rpi-ws281x-python (custom install)"] = install_rpi_ws281x()
     install_status["mpu6050 (custom install)"] = custom_install("cd ./Libs/mpu6050 && sudo python3 setup.py install")
     install_status["libqt5gui5 python3-dev python3-pyqt5"] = apt_install("libqt5gui5 python3-dev python3-pyqt5")
 
