@@ -198,7 +198,8 @@ def main():
     subprocess.run("sudo apt-get update", shell=True, check=True)
     install_status["mpu6050 (custom install)"] = custom_install("cd ./Libs/mpu6050 && sudo python3 setup.py install")
     install_status["libqt5gui5 python3-dev python3-pyqt5"] = apt_install("libqt5gui5 python3-dev python3-pyqt5")
-    install_status["rpi-ws281x-python (custom install)"] = install_rpi_ws281x()
+    install_status["rpi-ws281x-python (custom install)"] = custom_install("cd ./Libs/rpi-ws281x-python/library && sudo python3 setup.py install")
+    #install_status["rpi-ws281x-python (custom install)"] = install_rpi_ws281x()
 
     if all(install_status.values()):
         print("\nAll libraries have been installed successfully.")
