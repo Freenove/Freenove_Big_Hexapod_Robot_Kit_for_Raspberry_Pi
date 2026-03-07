@@ -272,32 +272,32 @@ class Control:
         self.set_leg_angles()
 
     def calculate_posture_balance(self, roll, pitch, yaw):
-        position = np.mat([0.0, 0.0, self.body_height]).T
+        position = np.asmatrix([0.0, 0.0, self.body_height]).T
         rpy = np.array([roll, pitch, yaw]) * math.pi / 180
         roll_angle, pitch_angle, yaw_angle = rpy[0], rpy[1], rpy[2]
-        rotation_x = np.mat([[1, 0, 0],
+        rotation_x = np.asmatrix([[1, 0, 0],
                              [0, math.cos(pitch_angle), -math.sin(pitch_angle)],
                              [0, math.sin(pitch_angle), math.cos(pitch_angle)]])
-        rotation_y = np.mat([[math.cos(roll_angle), 0, -math.sin(roll_angle)],
+        rotation_y = np.asmatrix([[math.cos(roll_angle), 0, -math.sin(roll_angle)],
                              [0, 1, 0],
                              [math.sin(roll_angle), 0, math.cos(roll_angle)]])
-        rotation_z = np.mat([[math.cos(yaw_angle), -math.sin(yaw_angle), 0],
+        rotation_z = np.asmatrix([[math.cos(yaw_angle), -math.sin(yaw_angle), 0],
                              [math.sin(yaw_angle), math.cos(yaw_angle), 0],
                              [0, 0, 1]])
         rotation_matrix = rotation_x * rotation_y * rotation_z
-        body_structure = np.mat([[55, 76, 0],
+        body_structure = np.asmatrix([[55, 76, 0],
                                 [85, 0, 0],
                                 [55, -76, 0],
                                 [-55, -76, 0],
                                 [-85, 0, 0],
                                 [-55, 76, 0]]).T
-        footpoint_structure = np.mat([[137.1, 189.4, 0],
+        footpoint_structure = np.asmatrix([[137.1, 189.4, 0],
                                      [225, 0, 0],
                                      [137.1, -189.4, 0],
                                      [-137.1, -189.4, 0],
                                      [-225, 0, 0],
                                      [-137.1, 189.4, 0]]).T
-        ab = np.mat(np.zeros((3, 6)))
+        ab = np.asmatrix(np.zeros((3, 6)))
         foot_positions = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
         for i in range(6):
             ab[:, i] = position + rotation_matrix * footpoint_structure[:, i]
